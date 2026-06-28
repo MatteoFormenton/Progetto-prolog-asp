@@ -1,0 +1,5 @@
+- Prendere il dataset da huggingface e creare un file json che contenga l'input
+- l'output deve essere pulito dai commenti e rimuovere la clausola :- solve, halt.
+- utilizzo di una query prolog sul dataset pulito per avere un risultato
+- il risultato va convertito con un llm() da prolog ad asp
+- Fine: file con json/jsonl con i campi: input, prolog_program, prolog_query, asp_program. 
