@@ -6,7 +6,7 @@ from pathlib import Path
 
 #percorsi dei file
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-INPUT_FILE = PROJECT_ROOT / "data" / "Prolog_Math_v4.jsonl"
+INPUT_FILE = PROJECT_ROOT / "data" / "Prolog_MATH_v4.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "outputs" / "prolog_clean.jsonl"
 
 
@@ -76,9 +76,21 @@ def remove_comments(prolog_code: str)-> str:
             i+=1
             continue
 
-        if char == "'" and not in_double_quote and not escaped:
+        # aggiunto questo controllo perchè rimanevano i commenti che iniziavano con '
+        is_character_code_quote = (
+            not in_single_quote
+            and i > 0
+            and prolog_code[i - 1] =="0"
+        )
+
+        if(
+            char ==""
+            and not in_double_quote
+            and not escaped
+            and not is_character_code_quote
+        ) :
             in_single_quote = not in_single_quote
-        elif char == '"' and not in_single_quote and not escaped:
+        elif char == "" and not in_single_quote and not escaped :
             in_double_quote = not in_double_quote
 
         escaped = False
@@ -149,7 +161,7 @@ def main() -> None:
                 if not line.strip():
                     continue
 
-                row = json.load(line)
+                row = json.loads(line)
                 prolog_program, prolog_query = clean_prolog_output(row["output"])
 
                 clean_row = {
