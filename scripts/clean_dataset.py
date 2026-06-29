@@ -7,7 +7,7 @@ from pathlib import Path
 #percorsi dei file
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = PROJECT_ROOT / "data" / "Prolog_MATH_v4.jsonl"
-OUTPUT_FILE = PROJECT_ROOT / "outputs" / "prolog_clean.jsonl"
+OUTPUT_FILE = PROJECT_ROOT / "data" / "prolog_clean.jsonl"
 
 
 

@@ -1,0 +1,5 @@
+Prolog validation report
+Total examples: 6093
+Correct: 4950
+Wrong answer: 1025
+Errors/timeouts: 118
