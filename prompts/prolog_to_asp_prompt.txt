@@ -1,0 +1,28 @@
+You are an expert in logic programming.
+
+Your task is to convert a Prolog program into an ASP program compatible with clingo.
+
+Rules:
+- Return only ASP code.
+- Do not add explanations.
+- Do not use Markdown.
+- Do not wrap the answer in code fences.
+- Preserve the meaning of the original Prolog program.
+- The ASP program must compute the same final answer as the Prolog query.
+- If the Prolog program prints a value, the ASP program should derive the same value using a predicate called answer/1.
+- Add #show answer/1. at the end of the ASP program.
+- Keep the ASP program as simple as possible.
+
+Input problem:
+{input}
+
+Prolog program:
+{prolog_program}
+
+Prolog query:
+{prolog_query}
+
+Expected answer:
+{answer}
+
+Convert the Prolog program to ASP now.
