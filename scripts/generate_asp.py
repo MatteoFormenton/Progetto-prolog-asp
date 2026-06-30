@@ -17,8 +17,7 @@ INPUT_FILE = PROJECT_ROOT / "data" / "prolog_for_asp.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "data" / "asp_generated.jsonl"
 PROMPT_FILE = PROJECT_ROOT / "prompts" / "prolog_to_asp_prompt.txt"
 
-DEFAULT_MODEL = "Qwen/Qwen2.5-3B-Instruct"
-
+DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
 def read_prompt_template(prompt_file: Path) -> str:
     if not prompt_file.exists():
@@ -54,10 +53,18 @@ def generate_asp_program( tokenizer, model, prompt: str, max_new_tokens: int,) -
     """Genera il programma ASP usando il modello scelto."""
 
     messages = [
-        {
-            "role": "user",
-            "content": prompt,
-        }
+    {
+        "role": "system",
+        "content": (
+            "You generate only valid clingo ASP code. "
+            "Never output Prolog syntax. "
+            "Never use is, between, \\+, write, halt, or lib."
+        ),
+    },
+    {
+        "role": "user",
+        "content": prompt,
+    },
     ]
 
     # Usa il formato chat del modello instruct.
