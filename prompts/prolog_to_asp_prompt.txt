@@ -26,3 +26,4 @@ Expected answer:
 {answer}
 
 Convert the Prolog program to ASP now.
+
