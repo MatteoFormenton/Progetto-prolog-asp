@@ -1,5 +1,5 @@
 ASP validation report
-Total examples: 5
-Correct: 1
-Wrong answer: 0
-Errors/timeouts: 4
+Total examples: 20
+Correct: 4
+Wrong answer: 1
+Errors/timeouts: 15

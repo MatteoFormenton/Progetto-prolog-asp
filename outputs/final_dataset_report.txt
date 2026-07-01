@@ -1,0 +1,12 @@
+Final dataset report
+Input file: /home/matteo/progetto-prolog-asp/data/asp_checked.jsonl
+Output file: /home/matteo/progetto-prolog-asp/data/final_dataset.jsonl
+Total checked examples: 20
+Included valid examples: 4
+Discarded invalid examples: 16
+
+Final JSONL fields:
+- input
+- prolog_program
+- prolog_query
+- asp_program
