@@ -1,7 +1,10 @@
 """
-Creazione di questo file perchè facendo dei test sui programmi prolog
-con 100 elementi noto che non mi danno le risposte che dovrebbero essere
-Il file mi mostra quale sono le risposte problematiche
+Ho creato questo file perché, facendo dei test sui programmi Prolog
+con 100 elementi, ho notato che alcune risposte non corrispondono
+a quelle attese.
+
+Uso questo script per visualizzare più facilmente quali esempi sono
+problematici e capire dove il programma Prolog sbaglia.
 """
 
 from __future__ import annotations
@@ -13,6 +16,11 @@ INPUT_FILE = PROJECT_ROOT / "data" / "prolog_checked.jsonl"
 
 
 def main ():
+
+    """
+    Leggo il file con i risultati Prolog e stampo solo gli esempi
+    che non sono stati classificati come corretti.
+    """
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"File non trovato: {INPUT_FILE}")
     
@@ -30,7 +38,7 @@ def main ():
 
             failures += 1
 
-
+            # Stampo tutte le informazioni utili per capire il problema.
             print("=" * 80)
             print(f"ID: {row.get('id')}")
             print()

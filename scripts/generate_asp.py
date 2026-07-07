@@ -1,6 +1,10 @@
 """
-Leggo ogni Prolog valido, costruisco un prompt così llm genera codice asp
-salvo il risultato in un file json"""
+Leggo ogni Prolog valido, costruisco un prompt e lo passo al modello
+LLM per generare il codice ASP corrispondente.
+
+Alla fine salvo ogni risultato in un file JSONL, così posso usare questi ASP
+nei passaggi successivi di controllo e validazione.
+"""
 
 from __future__ import annotations
 
@@ -17,9 +21,14 @@ INPUT_FILE = PROJECT_ROOT / "data" / "prolog_for_asp.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "data" / "asp_generated.jsonl"
 PROMPT_FILE = PROJECT_ROOT / "prompts" / "prolog_to_asp_prompt.txt"
 
+# Modello usato di default per generare il codice ASP.
 DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
 def read_prompt_template(prompt_file: Path) -> str:
+    """
+    Leggo il template del prompt da file, così posso riutilizzarlo
+    per ogni esempio del dataset.
+    """
     if not prompt_file.exists():
         raise FileNotFoundError(f"File prompt non trovato: {prompt_file}")
 
@@ -35,6 +44,10 @@ def build_prompt(template: str, row: dict) -> str:
     )
 
 def clean_llm_output(text: str) -> str:
+
+    """
+    Pulisco l'output del modello rimuovendo eventuali blocchi Markdown e spazi inutili.
+    """
     cleaned = text.strip()
 
     cleaned = re.sub(r"^```[a-zA-Z0-9_-]*\s*", "", cleaned)
@@ -43,6 +56,7 @@ def clean_llm_output(text: str) -> str:
     return cleaned.strip()
 
 def load_model(model_name: str):
+    """Carico tokenizer e modello HuggingFace"""
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
     model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", device_map="auto", )
@@ -197,7 +211,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
+def main():
     args = parse_args()
 
     generate_dataset(

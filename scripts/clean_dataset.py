@@ -2,20 +2,29 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
+"""
+Uso questo script per pulire il dataset Prolog originale.
 
+Leggo ogni riga del file JSONL, rimuovo i commenti dal codice Prolog,
+tolgo eventuali comandi di esecuzione automatica e salvo un nuovo dataset
+più ordinato, contenente il programma Prolog pulito, la query da eseguire
+e la risposta attesa.
+"""
 
-#percorsi dei file
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = PROJECT_ROOT / "data" / "Prolog_MATH_v4.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "data" / "prolog_clean.jsonl"
 
 
-
+# Regex per trovare eventuali righe del tipo ":- query, halt."
 AUTO_RUN_RE = re.compile(r"(?P<prefix>^|\n|(?<=\.))\s*:-\s*(?P<query>[^.\n]*?)\s*,\s*halt\s*\.")
 
 def remove_comments(prolog_code: str)-> str:
     """
-    
+    Rimuovo i commenti dal codice Prolog
+
+    Devo gestire sia i commenti di riga con %, sia i commenti a blocco
+    scritti tra /* e */.
     """
 
     cleaned_chars: list[str] = []
@@ -30,7 +39,7 @@ def remove_comments(prolog_code: str)-> str:
 
     while i< len(prolog_code):
         char= prolog_code[i]
-        next_char= prolog_code[i++1] if i+1 <len(prolog_code) else ""
+        next_char= prolog_code[i+1] if i+1 <len(prolog_code) else ""
 
         #Salta il contenuto di un commento di riga
         if in_line_comment:
@@ -149,7 +158,7 @@ def clean_prolog_output(prolog_code: str) -> tuple[str, str]:
 
 
 
-def main() -> None:
+def main():
     """Leggo il dataset riga per riga e scrivo il dataset pulito"""
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 

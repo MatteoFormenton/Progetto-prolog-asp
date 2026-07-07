@@ -12,6 +12,7 @@ INPUT_FILE = PROJECT_ROOT / "data" / "asp_checked.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "data" / "final_dataset.jsonl"
 REPORT_FILE = PROJECT_ROOT / "outputs" / "final_dataset_report.txt"
 
+# Campi che voglio mantenere nel dataset finale.
 
 FINAL_FIELDS = [
     "input",
@@ -21,7 +22,11 @@ FINAL_FIELDS = [
 ]
 
 
-def main() -> None:
+def main():
+    """
+    Leggo gli esempi controllati, scarto quelli non corretti
+    e salvo il dataset finale con solo i campi richiesti.
+    """
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"File non trovato: {INPUT_FILE}")
 
@@ -53,6 +58,7 @@ def main() -> None:
                 output_file.write(json.dumps(final_row, ensure_ascii=False) + "\n")
                 included += 1
 
+    # Preparo un report semplice con il riepilogo del dataset creato.
     report = (
         "Final dataset report\n"
         f"Input file: {INPUT_FILE}\n"

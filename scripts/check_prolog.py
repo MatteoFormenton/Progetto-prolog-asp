@@ -1,10 +1,11 @@
 """
-Funzione dello script:
-- lettura ogni esempio dal dataset pulito
-- salvataggio in un file .pl il programma prolog
-- esecuzione query prolog usando SWI-Prolog tramite subprocess
-- confronto tra l'output e il campo answer del dataet pulito
-- salvataggio del risultato 
+Uso questo script per controllare se i  Prolog del dataset pulito
+producono davvero la risposta attesa.
+
+Per ogni esempio salvo temporaneamente il programma in un file .pl,
+eseguo la query con SWI-Prolog tramite subprocess, confronto l'output
+con il campo answer e salvo il risultato del controllo in un nuovo file.
+Alla fine genero anche un report riassuntivo.
 """
 
 from __future__ import annotations
@@ -23,7 +24,7 @@ OUTPUT_FILE = PROJECT_ROOT / "data" / "prolog_checked.jsonl"
 REPORT_FILE = PROJECT_ROOT / "outputs" / "prolog_validation_report.txt"
 
 
-def prepare_output_files(output_file: Path, report_file: Path) -> None:
+def prepare_output_files(output_file: Path, report_file: Path):
     # creo i file di output se non esistono
     output_file.touch(exist_ok=True)
     report_file.touch(exist_ok=True)
@@ -69,7 +70,10 @@ def fraction_to_string(value: Fraction) -> str:
 
 
 def try_parse_fraction(value: str) -> Fraction | None:
-    """Prova a convertire vari formati di frazione in un oggetto Fraction."""
+    """
+    Provo a convertire una stringa in una frazione.
+    Gestisco formati diversi, come frazioni LaTeX, frac(a,b), numeri interi e numeri decimali.
+    """    
     text = normalize_text(value)
     text = text.replace(" ", "")
     text = text.replace("$", "")

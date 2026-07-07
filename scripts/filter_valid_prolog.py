@@ -1,5 +1,9 @@
 """
-Filtro i prolog validi 
+Uso questo script per filtrare i programmi Prolog validi.
+
+Parto dal file con i risultati già controllati e tengo solo gli esempi
+in cui il programma Prolog ha prodotto la risposta corretta. Salvo poi
+questi esempi in un nuovo file, che userò per generare i programmi ASP.
 """
 
 from __future__ import annotations
@@ -12,6 +16,8 @@ INPUT_FILE = PROJECT_ROOT / "data" / "prolog_checked.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "data" / "prolog_for_asp.jsonl"
 
 def main():
+
+    """Leggo il file dei risultati Prolog e salvo solo gli esempi corretti."""
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"File non trovato {INPUT_FILE}")
     

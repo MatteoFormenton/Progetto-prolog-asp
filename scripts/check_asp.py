@@ -1,6 +1,10 @@
 """
-leggo ogni ASP generato, lo salva temporaneamente in un file. Eseguo clingo tramite subprocess,estraggo answer e
-confronto il risultato con il campo answer salvandone poi il risultato.
+Leggo i programmi ASP generati, li eseguo con clingo e confronto il risultato
+ottenuto con la risposta attesa.
+
+Per ogni esempio del dataset viene salvato un nuovo record con l'output prodotto,
+la risposta normalizzata, l'esito del confronto e l'eventuale errore di clingo.
+Alla fine viene generato anche un piccolo report riassuntivo.
 """
 
 from __future__ import annotations
@@ -14,27 +18,26 @@ import tempfile
 from fractions import Fraction
 from pathlib import Path
 
-
+# Percorso principale del progetto e dei file di input/output
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-
 INPUT_FILE = PROJECT_ROOT / "data" / "asp_generated.jsonl"
 OUTPUT_FILE = PROJECT_ROOT / "data" / "asp_checked.jsonl"
 REPORT_FILE = PROJECT_ROOT / "outputs" / "asp_validation_report.txt"
 
 
-def prepare_output_files(output_file: Path, report_file: Path) -> None:
-    """ Crea solo i file se non esistono."""
+def prepare_output_files(output_file: Path, report_file: Path):
+    """ Creo i file se non esistono."""
     output_file.touch(exist_ok=True)
     report_file.touch(exist_ok=True)
 
 
 def normalize_text(value: str) -> str:
-
+    """Rimuovo spazi inutili e rendo il testo più semplice da confrontare."""
     return " ".join(str(value).strip().split())
 
 
 def fraction_to_string(value: Fraction) -> str:
-
+    """Converto una frazione in stringa, evitando il denominatore quando è 1."""
     if value.denominator == 1:
         return str(value.numerator)
 
@@ -42,11 +45,17 @@ def fraction_to_string(value: Fraction) -> str:
 
 
 def try_parse_fraction(value: str) -> Fraction | None:
+    """
+    Provo a interpretare una stringa come frazione.
 
+    Gestisco diversi formati possibili, ad esempio frazioni LaTeX,
+    valori nel formato frac(a,b) oppure numeri decimali/interi.
+    """
     text = normalize_text(value)
     text = text.replace(" ", "")
     text = text.replace("$", "")
 
+    # Caso tipo: \frac{1}{2}, eventualmente con segno davanti.
     match = re.fullmatch(r"([+-]?)\\frac\{([+-]?\d+)\}\{([+-]?\d+)\}", text)
     if match:
         sign, numerator, denominator = match.groups()
@@ -54,7 +63,9 @@ def try_parse_fraction(value: str) -> Fraction | None:
         if sign == "-":
             result = -result
         return result
+    
 
+    # Caso tipo: \frac12 oppure \frac123.
     match = re.fullmatch(r"([+-]?)\\frac(\d)(\d+)", text)
     if match:
         sign, numerator, denominator = match.groups()
@@ -62,12 +73,14 @@ def try_parse_fraction(value: str) -> Fraction | None:
         if sign == "-":
             result = -result
         return result
-
+    
+    # Caso tipo: frac(1,2).
     match = re.fullmatch(r"frac\(([+-]?\d+),([+-]?\d+)\)", text)
     if match:
         numerator, denominator = match.groups()
         return Fraction(int(numerator), int(denominator))
 
+    # Caso numerico semplice: intero o decimale.
     if re.fullmatch(r"[+-]?\d+(\.\d+)?", text):
         return Fraction(text)
 
@@ -75,17 +88,24 @@ def try_parse_fraction(value: str) -> Fraction | None:
 
 
 def normalize_for_compare(value: str) -> str:
-
+    """
+    Normalizzo un valore prima del confronto.
+    In questo modo risposte scritte in formati diversi, ma equivalenti, 
+    possono essere considerate uguali.
+    """
     text = normalize_text(value)
 
     fraction_value = try_parse_fraction(text)
 
     if fraction_value is not None:
         return fraction_to_string(fraction_value)
-
+    
+    # Alcune risposte possono contenere parentesi graffe non convertite.
     text = text.replace("\\{", "{")
     text = text.replace("\\}", "}")
 
+    # Se la risposta è una sequenza di lettere separate da virgole,
+    # rimuovo le virgole per uniformare il formato.
     if re.fullmatch(r"[A-Za-z](,[A-Za-z])+", text):
         return text.replace(",", "")
 
@@ -93,7 +113,9 @@ def normalize_for_compare(value: str) -> str:
 
 
 def run_clingo_program(asp_program: str, timeout_seconds: int) -> tuple[str, str]:
-
+    """
+    Eseguo un programma ASP con clingo, l'output viene richiesto in formato JSON.
+    """
     with tempfile.TemporaryDirectory() as temp_dir:
         program_path = Path(temp_dir) / "program.lp"
         program_path.write_text(asp_program, encoding="utf-8")
@@ -118,7 +140,9 @@ def run_clingo_program(asp_program: str, timeout_seconds: int) -> tuple[str, str
 
 
 def extract_answer_values(clingo_stdout: str) -> list[str]:
-
+    """
+    Estraggo i valori answer(...) dall'output JSON di clingo.
+    """
     try:
         data = json.loads(clingo_stdout)
     except json.JSONDecodeError:
@@ -126,6 +150,7 @@ def extract_answer_values(clingo_stdout: str) -> list[str]:
 
     answers: list[str] = []
 
+    # Scorro tutte le soluzioni prodotte da clingo e cerco solo answer(...).
     for call in data.get("Call", []):
         for witness in call.get("Witnesses", []):
             for atom in witness.get("Value", []):
@@ -134,6 +159,7 @@ def extract_answer_values(clingo_stdout: str) -> list[str]:
 
                 value = atom[len("answer("):-1]
 
+                # Se il valore è una stringa tra virgolette, rimuovo le virgolette esterne.
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
 
@@ -143,13 +169,15 @@ def extract_answer_values(clingo_stdout: str) -> list[str]:
 
 
 def answers_to_string(values: list[str]) -> str:
-
+    """
+    Converto la lista di risposte trovate in una singola stringa confrontabile.
+    """
     if not values:
         return ""
 
     if len(values) == 1:
         return values[0]
-
+    
     return ",".join(sorted(values))
 
 def classify_asp_error(stderr: str) -> str:
@@ -177,7 +205,9 @@ def classify_asp_error(stderr: str) -> str:
 
 
 def check_dataset( input_file: Path, output_file: Path, report_file: Path, limit: int | None, timeout_seconds: int,):
-
+    """
+    Controllo tutti gli esempi del dataset eseguendo i programmi ASP con clingo.
+    """
     if not input_file.exists():
         raise FileNotFoundError(f"File non trovato: {input_file}")
 
@@ -259,6 +289,10 @@ def check_dataset( input_file: Path, output_file: Path, report_file: Path, limit
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Leggo gli argomenti d linea di comando
+    """
+
     parser = argparse.ArgumentParser(
         description="Esegue i programmi ASP con clingo e confronta answer."
     )

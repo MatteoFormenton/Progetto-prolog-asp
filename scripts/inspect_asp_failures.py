@@ -1,3 +1,12 @@
+"""
+Ho creato questo file per controllare più facilmente quali programmi ASP
+non hanno prodotto la risposta corretta.
+
+Leggo il file con i risultati già verificati, salto gli esempi corretti
+e stampo solo quelli problematici, così posso capire se l'errore dipende
+dall'output prodotto da clingo, dal programma ASP o dal confronto con
+la risposta attesa.
+"""
 from __future__ import annotations
 
 import json
@@ -8,7 +17,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = PROJECT_ROOT / "data" / "asp_checked.jsonl"
 
 
-def main() -> None:
+def main():
+    """
+    Leggo il file dei risultati ASP e mostro solo gli esempi
+    che non sono stati classificati come corretti.
+    """
+    
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"File non trovato: {INPUT_FILE}")
 
@@ -25,7 +39,8 @@ def main() -> None:
                 continue
 
             failures += 1
-
+            
+            # Stampo le informazioni principali per analizzare il problema.
             print("=" * 80)
             print(f"ID: {row.get('id')}")
             print()
