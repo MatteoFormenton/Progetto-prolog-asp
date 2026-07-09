@@ -1,15 +1,13 @@
+"""
+Pulisce il dataset Prolog originale rimuovendo commenti e comandi automatici.
+Salva un nuovo JSONL con programma Prolog pulito, query e risposta attesa.
+"""
+
 from __future__ import annotations
 import json
 import re
 from pathlib import Path
-"""
-Uso questo script per pulire il dataset Prolog originale.
 
-Leggo ogni riga del file JSONL, rimuovo i commenti dal codice Prolog,
-tolgo eventuali comandi di esecuzione automatica e salvo un nuovo dataset
-più ordinato, contenente il programma Prolog pulito, la query da eseguire
-e la risposta attesa.
-"""
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = PROJECT_ROOT / "data" / "Prolog_MATH_v4.jsonl"

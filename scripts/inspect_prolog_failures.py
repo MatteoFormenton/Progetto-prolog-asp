@@ -1,11 +1,8 @@
 """
-Ho creato questo file perché, facendo dei test sui programmi Prolog
-con 100 elementi, ho notato che alcune risposte non corrispondono
-a quelle attese.
-
-Uso questo script per visualizzare più facilmente quali esempi sono
-problematici e capire dove il programma Prolog sbaglia.
+Mostra gli esempi problematici nei test Prolog con un numero di elementi,
+evidenziando i casi in cui l'output non corrisponde alla risposta attesa.
 """
+
 
 from __future__ import annotations
 import json

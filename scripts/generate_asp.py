@@ -1,10 +1,8 @@
 """
-Leggo ogni Prolog valido, costruisco un prompt e lo passo al modello
-LLM per generare il codice ASP corrispondente.
-
-Alla fine salvo ogni risultato in un file JSONL, così posso usare questi ASP
-nei passaggi successivi di controllo e validazione.
+Converte i programmi Prolog validi in codice ASP tramite modello LLM
+e salva i risultati in formato JSONL per le successive fasi di validazione.
 """
+
 
 from __future__ import annotations
 

@@ -1,0 +1,150 @@
+Nodo:
+gnode03.hpc.prv
+GPU:
+Tue Jul  7 23:10:57 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA L40S                    On  | 00000000:63:00.0 Off |                    0 |
+| N/A   27C    P8              32W / 350W |     23MiB / 46068MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A      2145      G   /usr/libexec/Xorg                            14MiB |
++---------------------------------------------------------------------------------------+
+Controllo Python:
+/hpc/home/mformenton/.conda/envs/prolog-asp/bin/python
+Python 3.11.15
+Test CUDA:
+CUDA disponibile: True
+NVIDIA L40S
+Pulizia vecchi output limit100...
+Avvio generazione ASP limit 100...
+Test generato: 1
+Test generato: 2
+Test generato: 3
+Test generato: 4
+Test generato: 5
+Test generato: 6
+Test generato: 7
+Test generato: 8
+Test generato: 9
+Test generato: 10
+Test generato: 11
+Test generato: 12
+Test generato: 13
+Test generato: 14
+Test generato: 15
+Test generato: 16
+Test generato: 17
+Test generato: 18
+Test generato: 19
+Test generato: 20
+Test generato: 21
+Test generato: 22
+Test generato: 23
+Test generato: 24
+Test generato: 25
+Test generato: 26
+Test generato: 27
+Test generato: 28
+Test generato: 29
+Test generato: 30
+Test generato: 31
+Test generato: 32
+Test generato: 33
+Test generato: 34
+Test generato: 35
+Test generato: 36
+Test generato: 37
+Test generato: 38
+Test generato: 39
+Test generato: 40
+Test generato: 41
+Test generato: 42
+Test generato: 43
+Test generato: 44
+Test generato: 45
+Test generato: 46
+Test generato: 47
+Test generato: 48
+Test generato: 49
+Test generato: 50
+Test generato: 51
+Test generato: 52
+Test generato: 53
+Test generato: 54
+Test generato: 55
+Test generato: 56
+Test generato: 57
+Test generato: 58
+Test generato: 59
+Test generato: 60
+Test generato: 61
+Test generato: 62
+Test generato: 63
+Test generato: 64
+Test generato: 65
+Test generato: 66
+Test generato: 67
+Test generato: 68
+Test generato: 69
+Test generato: 70
+Test generato: 71
+Test generato: 72
+Test generato: 73
+Test generato: 74
+Test generato: 75
+Test generato: 76
+Test generato: 77
+Test generato: 78
+Test generato: 79
+Test generato: 80
+Test generato: 81
+Test generato: 82
+Test generato: 83
+Test generato: 84
+Test generato: 85
+Test generato: 86
+Test generato: 87
+Test generato: 88
+Test generato: 89
+Test generato: 90
+Test generato: 91
+Test generato: 92
+Test generato: 93
+Test generato: 94
+Test generato: 95
+Test generato: 96
+Test generato: 97
+Test generato: 98
+Test generato: 99
+Test generato: 100
+File creato: data/asp_generated_limit100_test_hpc.jsonl
+Test generati: 100
+Generazione terminata.
+Avvio controllo ASP...
+ASP validation report
+Total examples: 100
+Correct: 17
+Wrong answer: 6
+Errors/timeouts: 77
+
+File creato: data/asp_checked_limit100_test_hpc.jsonl
+Report creato: outputs/asp_validation_report_limit100_test_hpc.txt
+Report finale:
+ASP validation report
+Total examples: 100
+Correct: 17
+Wrong answer: 6
+Errors/timeouts: 77
+Fine job.

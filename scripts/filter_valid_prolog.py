@@ -1,10 +1,8 @@
 """
-Uso questo script per filtrare i programmi Prolog validi.
-
-Parto dal file con i risultati già controllati e tengo solo gli esempi
-in cui il programma Prolog ha prodotto la risposta corretta. Salvo poi
-questi esempi in un nuovo file, che userò per generare i programmi ASP.
+Estrae i programmi Prolog che producono la risposta corretta e salva
+il dataset filtrato per la successiva generazione dei programmi ASP.
 """
+
 
 from __future__ import annotations
 import json

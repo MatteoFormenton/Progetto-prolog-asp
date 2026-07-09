@@ -1,0 +1,80 @@
+Nodo:
+gnode03.hpc.prv
+GPU:
+Tue Jul  7 22:59:11 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA L40S                    On  | 00000000:63:00.0 Off |                    0 |
+| N/A   27C    P8              32W / 350W |     23MiB / 46068MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A      2145      G   /usr/libexec/Xorg                            14MiB |
++---------------------------------------------------------------------------------------+
+Controllo Python:
+/hpc/home/mformenton/.conda/envs/prolog-asp/bin/python
+Python 3.11.15
+Test CUDA:
+CUDA disponibile: True
+NVIDIA L40S
+Pulizia vecchi output limit30...
+Avvio generazione ASP...
+Test generato: 1
+Test generato: 2
+Test generato: 3
+Test generato: 4
+Test generato: 5
+Test generato: 6
+Test generato: 7
+Test generato: 8
+Test generato: 9
+Test generato: 10
+Test generato: 11
+Test generato: 12
+Test generato: 13
+Test generato: 14
+Test generato: 15
+Test generato: 16
+Test generato: 17
+Test generato: 18
+Test generato: 19
+Test generato: 20
+Test generato: 21
+Test generato: 22
+Test generato: 23
+Test generato: 24
+Test generato: 25
+Test generato: 26
+Test generato: 27
+Test generato: 28
+Test generato: 29
+Test generato: 30
+File creato: data/asp_generated_limit30_test_hpc.jsonl
+Test generati: 30
+Generazione terminata.
+Avvio controllo ASP...
+ASP validation report
+Total examples: 30
+Correct: 7
+Wrong answer: 1
+Errors/timeouts: 22
+
+File creato: data/asp_checked_limit30_test_hpc.jsonl
+Report creato: outputs/asp_validation_report_limit30_test_hpc.txt
+Report finale:
+ASP validation report
+Total examples: 30
+Correct: 7
+Wrong answer: 1
+Errors/timeouts: 22
+Fine job.

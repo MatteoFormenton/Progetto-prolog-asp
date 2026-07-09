@@ -1,0 +1,5 @@
+ASP validation report
+Total examples: 4950
+Correct: 398
+Wrong answer: 496
+Errors/timeouts: 4056

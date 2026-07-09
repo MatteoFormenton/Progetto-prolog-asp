@@ -1,12 +1,9 @@
 """
-Uso questo script per controllare se i  Prolog del dataset pulito
-producono davvero la risposta attesa.
-
-Per ogni esempio salvo temporaneamente il programma in un file .pl,
-eseguo la query con SWI-Prolog tramite subprocess, confronto l'output
-con il campo answer e salvo il risultato del controllo in un nuovo file.
-Alla fine genero anche un report riassuntivo.
+Esegue i programmi Prolog del dataset pulito con SWI-Prolog e confronta
+l'output con la risposta attesa. Salva gli esiti in un nuovo file e genera
+un report riassuntivo.
 """
+
 
 from __future__ import annotations
 import argparse
