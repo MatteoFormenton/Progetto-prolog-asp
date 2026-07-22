@@ -1,8 +1,10 @@
 """
-Converte i programmi Prolog validi in codice ASP tramite modello LLM
-e salva i risultati in formato JSONL per le successive fasi di validazione.
-"""
+Leggo ogni Prolog valido, costruisco un prompt e lo passo al modello
+LLM per generare il codice ASP corrispondente.
 
+Alla fine salvo ogni risultato in un file JSONL, così posso usare questi ASP
+nei passaggi successivi di controllo e validazione.
+"""
 
 from __future__ import annotations
 
@@ -107,7 +109,14 @@ def generate_asp_program( tokenizer, model, prompt: str, max_new_tokens: int,) -
 
     return clean_llm_output(output_text)
 
-def generate_dataset(input_file: Path, output_file: Path, prompt_file: Path, model_name: str, limit: int | None, max_new_tokens: int,):
+def generate_dataset(
+    input_file: Path,
+    output_file: Path,
+    prompt_file: Path,
+    model_name: str,
+    limit: int | None,
+    max_new_tokens: int,
+):
     """Legge il dataset validato e genera il codice ASP."""
 
     if not input_file.exists():
@@ -115,47 +124,62 @@ def generate_dataset(input_file: Path, output_file: Path, prompt_file: Path, mod
 
     prompt_template = read_prompt_template(prompt_file)
 
+    # Calcolo quanti esempi devo generare, così posso stampare X / totale.
+    with input_file.open("r", encoding="utf-8") as input_handle:
+        rows = [
+            json.loads(line)
+            for line in input_handle
+            if line.strip()
+        ]
+
+    if limit is not None:
+        rows = rows[:limit]
+
+    total_examples = len(rows)
+
+    print(f"Esempi da generare: {total_examples}", flush=True)
+    print(f"Modello: {model_name}", flush=True)
+
     tokenizer, model = load_model(model_name)
+
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
     total = 0
 
-    with input_file.open("r", encoding="utf-8") as input_handle:
-        with output_file.open("w", encoding="utf-8") as output_handle:
-            for line in input_handle:
-                if not line.strip():
-                    continue
+    with output_file.open("w", encoding="utf-8") as output_handle:
+        for index, row in enumerate(rows, start=1):
+            prompt = build_prompt(prompt_template, row)
 
-                if limit is not None and total >= limit:
-                    break
+            asp_program = generate_asp_program(
+                tokenizer=tokenizer,
+                model=model,
+                prompt=prompt,
+                max_new_tokens=max_new_tokens,
+            )
 
-                row = json.loads(line)
-                prompt = build_prompt(prompt_template, row)
+            output_row = {
+                "id": row.get("id"),
+                "input": row["input"],
+                "prolog_program": row["prolog_program"],
+                "prolog_query": row["prolog_query"],
+                "answer": row["answer"],
+                "asp_program": asp_program,
+            }
 
-                asp_program = generate_asp_program(
-                    tokenizer=tokenizer,
-                    model=model,
-                    prompt=prompt,
-                    max_new_tokens=max_new_tokens,
-                )
+            output_handle.write(
+                json.dumps(output_row, ensure_ascii=False) + "\n"
+            )
+            output_handle.flush()
 
-                output_row = {
-                    "id": row.get("id"),
-                    "input": row["input"],
-                    "prolog_program": row["prolog_program"],
-                    "prolog_query": row["prolog_query"],
-                    "answer": row["answer"],
-                    "asp_program": asp_program,
-                }
+            total += 1
 
-                output_handle.write(
-                    json.dumps(output_row, ensure_ascii=False) + "\n"
-                )
+            print(
+                f"[{index}/{total_examples}] Test generato",
+                flush=True,
+            )
 
-                total += 1
-                print(f"Test generato: {total}")
-
-    print(f"File creato: {output_file}")
-    print(f"Test generati: {total}")
+    print(f"File creato: {output_file}", flush=True)
+    print(f"Test generati: {total}", flush=True)
 
 
 def parse_args() -> argparse.Namespace:

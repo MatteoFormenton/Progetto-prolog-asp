@@ -1,8 +1,11 @@
 """
-Esegue i programmi ASP con clingo e verifica la corrispondenza con le
-risposte attese. Salva risultati, errori e un breve report finale.
-"""
+Leggo i programmi ASP generati, li eseguo con clingo e confronto il risultato
+ottenuto con la risposta attesa.
 
+Per ogni esempio del dataset viene salvato un nuovo record con l'output prodotto,
+la risposta normalizzata, l'esito del confronto e l'eventuale errore di clingo.
+Alla fine viene generato anche un piccolo report riassuntivo.
+"""
 
 from __future__ import annotations
 
