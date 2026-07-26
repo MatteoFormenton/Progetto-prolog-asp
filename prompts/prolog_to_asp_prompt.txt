@@ -180,3 +180,49 @@ Prolog query:
 
 Expected answer:
 {answer}
+CRITICAL CLINGO RULES:
+- Return only clingo ASP code.
+- Do not output reasoning, analysis, comments, explanations, or markdown.
+- Every variable in every rule must be safe.
+- Every variable must appear in a positive domain predicate in the body, such as n(X), b(B), value(V), before it is used in arithmetic or comparisons.
+- Do not define generic arithmetic predicates with unsafe variables, for example avoid:
+  discriminant(A,B,C,D) :- D = B*B - 4*A*C.
+- Instead, always include domains for all variables or compute directly inside a rule where the variables are already domain-bound.
+- In clingo, do not use Prolog integer division //.
+- Use / for integer division in clingo.
+- The program must contain exactly one final #show answer/1.
+- Stop immediately after #show answer/1.
+
+STRICT ASP TRANSLATION RULES FOR CLINGO:
+- Output only valid clingo ASP code.
+- Do not output Prolog code.
+- Do not use solve/0 as the main result rule.
+- The final result must always be derived with answer/1 in the rule head.
+- Never write answer(X) inside the body of a rule.
+- Wrong:
+  solve :- value(X), answer(X).
+- Correct:
+  answer(X) :- value(X).
+
+- Do not use Prolog lists such as [1,2,3], [], [H|T].
+- Encode lists as facts instead:
+  item(1). item(2). item(3).
+
+- Do not use Prolog if-then-else syntax:
+  (Cond -> A ; B)
+- Do not use sqrt/1, floating-point constants, scientific notation, or tolerances such as 1e-8.
+- Clingo supports integer arithmetic only. Use finite integer domains and integer constraints.
+
+- Preserve constants and facts from the Prolog program.
+- Do not replace specific Prolog facts with broad arbitrary domains.
+- If Prolog has first(25). and second(7)., keep first(25). and second(7). in ASP.
+
+- Every predicate must be used with exactly the same arity everywhere.
+- If you define discriminant(B,C,D), do not call discriminant(B,D).
+- Avoid unnecessary helper predicates when direct integer constraints are simpler.
+
+- Every variable must be safe.
+- Every variable must appear in a positive domain or fact predicate before arithmetic/comparisons.
+- The ASP program must end with exactly:
+#show answer/1.
+- Stop immediately after #show answer/1.
