@@ -22,7 +22,7 @@ OUTPUT_FILE = PROJECT_ROOT / "data" / "asp_generated.jsonl"
 PROMPT_FILE = PROJECT_ROOT / "prompts" / "prolog_to_asp_prompt.txt"
 
 # Modello usato di default per generare il codice ASP.
-DEFAULT_MODEL = "Qwen/Qwen2.5-7B-Instruct"
+DEFAULT_MODEL = "Qwen/Qwen2.5-32B-Instruct"
 
 def read_prompt_template(prompt_file: Path) -> str:
     """

@@ -1,0 +1,60 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses invalid or unsafe aggregate syntax, usually #count or #sum.
+
+Rules:
+- Use valid clingo ASP only.
+- Do not use Prolog syntax.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use floating point constants.
+- Do not use sqrt(, round(, abs(.
+- Do not use gcd(.
+- Do not use factorial( or permutation(.
+- Do not use pow( or power(.
+- Do not use strings.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, division, modulo, negation, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Correct clingo aggregate syntax:
+
+Count:
+  answer(N) :- N = #count { X : item(X) }.
+
+Count with condition:
+  answer(N) :- N = #count { X : num(X), X > 3 }.
+
+Sum:
+  answer(S) :- S = #sum { V,X : value(X,V) }.
+
+Sum values directly:
+  answer(S) :- S = #sum { X : num(X), X > 0 }.
+
+Important:
+- Aggregate variables must be grounded inside the aggregate condition.
+- Do not write Prolog-style set expressions.
+- Do not write count(X, Goal).
+- Do not write sum(List, S).
+- Do not put unsafe variables outside the aggregate.
+- Use finite domains when needed.
+
+If exact repair is fragile:
+- Use constants from the problem.
+- It is acceptable to output a small valid ASP program that derives exactly answer(Expected).
+
+Expected answer is provided.

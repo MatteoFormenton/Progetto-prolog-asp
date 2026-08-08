@@ -1,0 +1,42 @@
+wrong_answer mismatch profile
+rows: 598
+
+class counts:
+- actual::integer: 330
+- expected::integer: 312
+- expected::slash_fraction: 256
+- actual::empty: 199
+- actual::other: 62
+- expected::other: 14
+- expected::structured: 12
+- actual::structured: 5
+- expected::symbol: 2
+- expected::multi_or_spaced: 2
+- actual::symbol: 1
+- actual::slash_fraction: 1
+
+expected -> actual class pairs:
+- slash_fraction -> integer: 185
+- integer -> integer: 142
+- integer -> empty: 129
+- slash_fraction -> empty: 63
+- integer -> other: 41
+- other -> other: 10
+- slash_fraction -> other: 7
+- structured -> structured: 5
+- structured -> empty: 4
+- structured -> other: 3
+- other -> empty: 3
+- multi_or_spaced -> integer: 2
+- symbol -> symbol: 1
+- symbol -> other: 1
+- other -> integer: 1
+- slash_fraction -> slash_fraction: 1
+
+mismatch buckets:
+- numeric_other: 291
+- actual_empty: 199
+- other: 69
+- numeric_scale_or_factor: 21
+- numeric_off_by_one: 16
+- symbolic: 2

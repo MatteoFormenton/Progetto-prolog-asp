@@ -1,0 +1,51 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses decimal constants like 0.5, 1.0, or scientific notation.
+clingo integer ASP does not handle these as normal arithmetic in this benchmark.
+
+Rules:
+- Use valid clingo ASP only.
+- Avoid floating point constants.
+- Replace decimals with integer arithmetic where possible.
+- Replace 0.5 with rational/integer scaling, for example compare 2*X with integer thresholds.
+- Replace N + 0.5 round logic with integer formulas.
+- Do not use sqrt(, round(, abs(.
+- Do not use #count/#sum aggregates in this task.
+- Do not use gcd(.
+- Do not use factorial( or permutation(.
+- Do not use pow( or power(.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use strings.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, division, modulo, negation, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Useful patterns:
+  scaled_value(X2) :- X2 = 2 * X.
+  half_threshold_ok(X) :- n(X), 2 * X >= T2.
+
+For average-like formulas:
+  AvgScaled = Sum * 10 / Count.
+  answer(A) :- A = AvgScaled.
+
+If exact repair is fragile:
+- Use constants from the problem.
+- It is acceptable to output a small valid ASP program that derives exactly answer(Expected).
+
+Expected answer is provided.

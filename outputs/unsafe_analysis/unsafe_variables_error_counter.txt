@@ -1,0 +1,103 @@
+=== Unsafe variables ===
+ 222  #Arith0
+ 107  X
+  83  A
+  72  Y
+  70  B
+  58  #Arith1
+  38  #Anon0
+  37  D
+  33  C
+  29  R
+  27  N
+  26  #Arith2
+  25  Sum
+  24  Acc
+  24  Result
+  17  D1
+  16  X2
+  15  S
+  15  X1
+  14  D2
+  13  Z
+  13  B2
+  13  #Arith3
+  12  M
+  12  B1
+  12  Y1
+  12  Y2
+  11  A2
+  11  N1
+  10  I1
+  10  I2
+  10  A1
+  10  #Anon1
+  10  I
+  10  N2
+  10  G
+   9  K
+   9  C2
+   9  R1
+   9  R2
+   8  Base
+   7  D4
+   7  D3
+   7  Product
+   7  Area
+   6  Min
+   6  A3
+   6  B3
+   6  C1
+   6  Rr
+
+=== Unsafe messages ===
+   2  /tmp/tmpa0jlldp4/program.lp:22:25-44: error: unsafe variables in:
+   2  /tmp/tmpr2689cnq/program.lp:25:5-48: error: unsafe variables in:
+   1  /tmp/tmpg2dcjadt/program.lp:17:1-23:14: error: unsafe variables in:
+   1  /tmp/tmpg2dcjadt/program.lp:17:14-15: note: 'S' is unsafe
+   1  /tmp/tmp00svv6sz/program.lp:3:1-27: error: unsafe variables in:
+   1  /tmp/tmp00svv6sz/program.lp:3:3-4: note: 'X' is unsafe
+   1  /tmp/tmp00svv6sz/program.lp:3:5-6: note: 'Y' is unsafe
+   1  /tmp/tmp00svv6sz/program.lp:5:1-28: error: unsafe variables in:
+   1  /tmp/tmp00svv6sz/program.lp:5:3-4: note: 'X' is unsafe
+   1  /tmp/tmp00svv6sz/program.lp:5:5-6: note: 'Y' is unsafe
+   1  /tmp/tmpeyoppb5s/program.lp:23:1-25:13: error: unsafe variables in:
+   1  /tmp/tmpeyoppb5s/program.lp:25:11-12: note: 'K' is unsafe
+   1  /tmp/tmp8btqp5td/program.lp:11:1-13:17: error: unsafe variables in:
+   1  /tmp/tmp8btqp5td/program.lp:13:11-16: note: '#Arith0' is unsafe
+   1  /tmp/tmp8btqp5td/program.lp:11:5-6: note: 'A' is unsafe
+   1  /tmp/tmp8btqp5td/program.lp:11:11-14: note: 'Res' is unsafe
+   1  /tmp/tmp8btqp5td/program.lp:17:1-22: error: unsafe variables in:
+   1  /tmp/tmp8btqp5td/program.lp:17:19-20: note: 'M' is unsafe
+   1  /tmp/tmpcoxbv9hi/program.lp:20:1-23:16: error: unsafe variables in:
+   1  /tmp/tmpcoxbv9hi/program.lp:20:12-15: note: 'Cur' is unsafe
+   1  /tmp/tmpcoxbv9hi/program.lp:25:1-26:15: error: unsafe variables in:
+   1  /tmp/tmpcoxbv9hi/program.lp:25:16-17: note: '#Anon0' is unsafe
+   1  /tmp/tmpcoxbv9hi/program.lp:25:12-15: note: 'Cur' is unsafe
+   1  /tmp/tmpcoxbv9hi/program.lp:25:18-21: note: 'Min' is unsafe
+   1  /tmp/tmpcoxbv9hi/program.lp:28:1-30:14: error: unsafe variables in:
+   1  /tmp/tmpcoxbv9hi/program.lp:28:10-11: note: 'K' is unsafe
+   1  /tmp/tmppzjn_0y_/program.lp:15:1-35: error: unsafe variables in:
+   1  /tmp/tmppzjn_0y_/program.lp:15:16-19: note: 'Min' is unsafe
+   1  /tmp/tmppzjn_0y_/program.lp:15:10-14: note: 'Vals' is unsafe
+   1  /tmp/tmppzjn_0y_/program.lp:16:1-55: error: unsafe variables in:
+   1  /tmp/tmppzjn_0y_/program.lp:16:10-14: note: 'Vals' is unsafe
+   1  /tmp/tmp8c1y4eav/program.lp:6:1-52: error: unsafe variables in:
+   1  /tmp/tmp8c1y4eav/program.lp:6:46-51: note: '#Arith0' is unsafe
+   1  /tmp/tmp8c1y4eav/program.lp:6:16-17: note: 'A' is unsafe
+   1  /tmp/tmp8c1y4eav/program.lp:6:19-20: note: 'B' is unsafe
+   1  /tmp/tmp8c1y4eav/program.lp:6:22-23: note: 'R' is unsafe
+   1  /tmp/tmp9013dsz3/program.lp:97:1-99:15: error: unsafe variables in:
+   1  /tmp/tmp9013dsz3/program.lp:99:9-14: note: '#Arith0' is unsafe
+   1  /tmp/tmp9013dsz3/program.lp:97:7-8: note: 'X' is unsafe
+   1  /tmp/tmp9013dsz3/program.lp:97:9-10: note: 'Y' is unsafe
+   1  /tmp/tmp9013dsz3/program.lp:101:1-103:21: error: unsafe variables in:
+   1  /tmp/tmp9013dsz3/program.lp:103:9-20: note: '#Arith0' is unsafe
+   1  /tmp/tmp9013dsz3/program.lp:101:7-8: note: 'X' is unsafe
+   1  /tmp/tmp9013dsz3/program.lp:101:9-10: note: 'Y' is unsafe
+   1  /tmp/tmp77ksanzw/program.lp:9:1-12:15: error: unsafe variables in:
+   1  /tmp/tmp77ksanzw/program.lp:9:13-14: note: 'A' is unsafe
+   1  /tmp/tmp77ksanzw/program.lp:9:15-16: note: 'B' is unsafe
+   1  /tmp/tmp77ksanzw/program.lp:9:17-18: note: 'C' is unsafe
+   1  /tmp/tmpprqm56bp/program.lp:5:1-8:28: error: unsafe variables in:
+   1  /tmp/tmpprqm56bp/program.lp:6:10-27: note: '#Arith0' is unsafe

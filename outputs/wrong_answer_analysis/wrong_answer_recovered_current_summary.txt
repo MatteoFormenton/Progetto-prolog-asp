@@ -1,0 +1,22 @@
+wrong_answer recovered current correct
+Original wrong_answer bucket: 598
+Unique recovered: 591
+Remaining: 7
+
+By source:
+- wrong_probability_fraction_exact_frac: 191
+- wrong_core_plain_exact_integer: 187
+- wrong_probability_fraction_exact_decimal_string: 60
+- wrong_aggregate_exact_integer: 56
+- wrong_probability_fraction_exact_integer: 24
+- wrong_core_plain_structured_exact_string: 20
+- wrong_sqrt_round_abs_exact_integer: 14
+- wrong_list_exact_integer: 10
+- wrong_pow_power_exact_integer: 9
+- wrong_factorial_permutation_exact_integer: 6
+- wrong_probability_fraction_final_exact_string: 4
+- wrong_gcd_exact_integer: 4
+- wrong_aggregate_exact_string: 2
+- wrong_symbolic_string_exact_string: 2
+- wrong_sqrt_round_abs_exact_string: 1
+- wrong_pow_power_exact_string: 1

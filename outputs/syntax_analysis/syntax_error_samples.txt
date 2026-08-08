@@ -1,0 +1,1924 @@
+====================================================================================================
+LOCAL INDEX: 0
+ORIGINAL INDEX: 1
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+If $x$, $y$, and $z$ are positive numbers satisfying \[
+x+\frac{1}{y}=4,\ \ \ y+\frac{1}{z}=1,\text{ and }z+\frac{1}{x}=\frac{7}{3},
+\]find the value of $xyz$.
+
+PROLOG PROGRAM:
+solve :-
+    S1 is 4 + 1 + 7/3,
+    P1 is 4 * 1 * (7/3),
+    Right is P1 - S1,
+    A is 1.0, B is -Right, C is 1.0,
+    Disc is B*B - 4*A*C,
+    Psol is (-B + sqrt(Disc)) / (2*A),
+    Result is round(Psol),
+    write(Result).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+x(1..100).
+y(1..100).
+z(1..100).
+
+eq1(X,Y) :- x(X), y(Y), X + 1.0/Y = 4.
+eq2(Y,Z) :- y(Y), z(Z), Y + 1.0/Z = 1.
+eq3(Z,X) :- z(Z), x(X), Z + 1.0/X = 7/3.
+
+solution(X,Y,Z) :- eq1(X,Y), eq2(Y,Z), eq3(Z,X).
+
+product(X,Y,Z,P) :- solution(X,Y,Z), P = X * Y * Z.
+
+round_product(P,R) :- product(_,_,_,P), R = int(P + 0.5).
+
+answer(R) :- round_product(_,R).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp60ep9g7u/program.lp:5:30-31: error: syntax error, unexpected .
+
+/tmp/tmp60ep9g7u/program.lp:6:30-31: error: syntax error, unexpected .
+
+/tmp/tmp60ep9g7u/program.lp:7:30-31: error: syntax error, unexpected .
+
+/tmp/tmp60ep9g7u/program.lp:13:54-55: error: syntax error, unexpected ., expecting ) or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 1
+ORIGINAL INDEX: 4
+ANSWER: 2
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Solve for $c$: $$\sqrt{4+\sqrt{8+4c}}+ \sqrt{2+\sqrt{2+c}} = 2+2\sqrt{2}$$
+
+PROLOG PROGRAM:
+abs_diff(X,Y,D) :- Diff is X-Y, (Diff>=0->D=Diff;D is -Diff).
+
+solve :-
+    between(-2,100,C),
+    I1 is 8+4*C, I1>=0,
+    I2 is 2+C, I2>=0,
+    L is sqrt(4+sqrt(I1)) + sqrt(2+sqrt(I2)),
+    R is 2+2*sqrt(2),
+    abs_diff(L,R,D), D<1e-8,
+    write(C), !.
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+c(-2..100).
+
+valid_c(C) :-
+    c(C),
+    I1 = 8 + 4 * C,
+    I2 = 2 + C,
+    L = sqrt(4 + sqrt(I1)) + sqrt(2 + sqrt(I2)),
+    R = 2 + 2 * sqrt(2),
+    D = abs(L - R),
+    D < 0.0001.
+
+answer(C) :-
+    valid_c(C).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp_1p1pwlq/program.lp:10:12-13: error: syntax error, unexpected <NUMBER>
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 2
+ORIGINAL INDEX: 15
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Solve for $x$, if $8^{4x-6}=\left(\frac{1}{2}\right)^{x+5}$.
+
+PROLOG PROGRAM:
+solve :-
+    between(-10,10,X),
+    LHS is 8**(4*X-6),
+    RHS is (1/2)**(X+5),
+    abs(LHS-RHS) < 1e-9,
+    write(X), !.
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+x(-10..10).
+
+power_8(0,1).
+power_8(N,P) :- N > 0, N1 = N - 1, power_8(N1,P1), P = P1 * 8.
+power_half(0,1).
+power_half(N,P) :- N > 0, N1 = N - 1, power_half(N1,P1), P = P1 / 2.
+
+lhs(X,L) :- x(X), NX = 4 * X - 6, (NX >= 0 -> power_8(NX,PL), L = PL ; NX1 = -NX, power_8(NX1,PL), L = 1 / PL).
+rhs(X,R) :- x(X), NX = X + 5, power_half(NX,R).
+
+valid_solution(X) :- lhs(X,L), rhs(X,R), L = R.
+
+answer(X) :- valid_solution(X).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmptq7a2550/program.lp:8:39-41: error: syntax error, unexpected >=, expecting )
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 3
+ORIGINAL INDEX: 25
+ANSWER: 5
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Let $f(x)=\frac{3x^2+5x+8}{x^2-x+4}$ and $g(x)=x-1$. Find $f(g(x))+g(f(x))$, evaluated when $x=1$.
+
+PROLOG PROGRAM:
+f(X,Result) :-
+    Num is 3*X*X + 5*X + 8,
+    Den is X*X - X + 4,
+    Result is Num // Den.
+
+g(X,Result) :-
+    Result is X - 1.
+
+solve :-
+    X is 1,
+    g(X,GX),
+    f(GX,FGX),
+    f(X,F1),
+    g(F1,GF1),
+    Sum is FGX + GF1,
+    write(Sum), !.
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+x(1).
+
+f(X,Result) :-
+    x(X),
+    Num = 3*X*X + 5*X + 8,
+    Den = X*X - X + 4,
+    Result = Num // Den.
+
+g(X,Result) :-
+    x(X),
+    Result = X - 1.
+
+compute_sum(Sum) :-
+    x(X),
+    g(X,GX),
+    f(GX,FGX),
+    f(X,F1),
+    g(F1,GF1),
+    Sum = FGX + GF1.
+
+answer(Sum) :-
+    compute_sum(Sum).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpnosdtgje/program.lp:7:19-20: error: syntax error, unexpected /
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 4
+ORIGINAL INDEX: 28
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Compute $i^{-100}+i^{-99}+i^{-98}+\cdots+i^{-1}+i^0+i^1+\cdots+i^{99}+i^{100}$.
+
+PROLOG PROGRAM:
+power_i(K,R,I) :-
+    M0 is K mod 4,
+    M is (M0 + 4) mod 4,
+    ( M =:= 0 -> R = 1,  I = 0
+    ; M =:= 1 -> R = 0,  I = 1
+    ; M =:= 2 -> R = -1, I = 0
+    ;              R = 0,  I = -1
+    ).
+
+sum_powers(Current,Max,Rsum,Isum) :-
+    Current > Max,
+    Rsum = 0,
+    Isum = 0.
+
+sum_powers(Current,Max,Rsum,Isum) :-
+    Current =< Max,
+    power_i(Current,R,I),
+    Next is Current + 1,
+    sum_powers(Next,Max,Rnext,Inext),
+    Rsum is R + Rnext,
+    Isum is I + Inext.
+
+solve :-
+    sum_powers(-100,100,Rsum,Isum),
+
+    Isum =:= 0,
+    write(Rsum).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+k(-100..100).
+
+power_i(K,R,I) :-
+    k(K),
+    M0 = K % 4,
+    M = (M0 + 4) % 4,
+    (M = 0 -> R = 1, I = 0;
+     M = 1 -> R = 0, I = 1;
+     M = 2 -> R = -1, I = 0;
+     R = 0, I = -1).
+
+sum_powers(Current,Max,Rsum,Isum) :-
+    k(Current),
+    k(Max),
+    Current > Max,
+    Rsum = 0,
+    Isum = 0.
+
+sum_powers(Current,Max,Rsum,Isum) :-
+    k(Current),
+    k(Max),
+    Current <= Max,
+    power_i(Current,R,I),
+    Next = Current + 1,
+    sum_powers(Next,Max,Rnext,Inext),
+    Rsum = R + Rnext,
+    Isum = I + Inext.
+
+answer(Rsum) :-
+    sum_powers(-100,100,Rsum,Isum),
+    Isum = 0.
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp7g5jx0jz/program.lp:6:5-6: error: syntax error, unexpected <VARIABLE>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 5
+ORIGINAL INDEX: 35
+ANSWER: 6
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+The number 21 is the sum of two consecutive integers 10 and 11. What is the largest number of positive, consecutive integers whose sum is 21?
+
+PROLOG PROGRAM:
+sum_consecutive(Start,Len,Sum) :-
+    End is Start + Len - 1,
+    Sum is (Start + End) * Len // 2.
+
+valid_length(L) :-
+    between(1,21,L),
+    between(1,21,S),
+    sum_consecutive(S,L,21).
+
+solve :-
+    findall(L, valid_length(L), Ls),
+    max_list(Ls,MaxL),
+    write(MaxL).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+start(1..21).
+length(1..21).
+
+sum_consecutive(Start,Len,Sum) :-
+    start(Start),
+    length(Len),
+    Sum = ((Start + Start + Len - 1) * Len) div 2.
+
+valid_length(Len) :-
+    length(Len),
+    start(Start),
+    sum_consecutive(Start,Len,21).
+
+max_length(MaxL) :-
+    valid_length(MaxL),
+    not (valid_length(Len), Len > MaxL).
+
+answer(MaxL) :-
+    max_length(MaxL).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp40uu260c/program.lp:7:45-48: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+/tmp/tmp40uu260c/program.lp:16:33-34: error: syntax error, unexpected >, expecting )
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 6
+ORIGINAL INDEX: 36
+ANSWER: 0
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+How many points of intersection are there between the graphs of the following equations: \begin{align*}
+y &=|2x + 5|, \\
+y &= -|3x - 2|
+\end{align*}
+
+PROLOG PROGRAM:
+solve :-
+
+    findall((X,Y), (
+        between(-100,100,X),
+        Y1 is abs(2*X+5),
+        Y2 is -abs(3*X-2),
+        Y1 =:= Y2,
+        Y is Y1
+    ), Points),
+    sort(Points,Unique),
+    length(Unique,N),
+    write(N).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+x(-100..100).
+
+intersection(X,Y) :-
+    x(X),
+    Y1 = abs(2*X + 5),
+    Y2 = -abs(3*X - 2),
+    Y1 = Y2,
+    Y = Y1.
+
+unique_intersection(X,Y) :-
+    intersection(X,Y),
+    not (intersection(X1,Y), X1 < X ; intersection(X1,Y1), X = X1, Y1 < Y).
+
+count_intersections(N) :-
+    #count{X,Y : unique_intersection(X,Y)} = N.
+
+answer(N) :-
+    count_intersections(N).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp1qqyknnd/program.lp:12:33-34: error: syntax error, unexpected <, expecting )
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 7
+ORIGINAL INDEX: 42
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Both roots of the quadratic equation $x^2 - 63 x + k = 0$ are prime numbers. How many possible values of $k$ are there?
+
+PROLOG PROGRAM:
+is_prime(2).
+is_prime(3).
+is_prime(N) :-
+    integer(N), N > 3,
+    Max is floor(sqrt(N)),
+    \+ ( between(2,Max,F), N mod F =:= 0 ).
+
+solve :-
+    findall(K,
+        (
+            between(2,61,P), is_prime(P),
+            Q is 63 - P,
+            Q >= 2, is_prime(Q),
+            K is P*Q
+        ), Ks),
+    sort(Ks,U),
+    length(U,C),
+    write(C).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+prime(2).
+prime(3).
+prime(N) :-
+    n(N),
+    N > 3,
+    not divisible(N, F),
+    f(F),
+    F * F <= N.
+
+divisible(N, F) :-
+    f(F),
+    N mod F = 0.
+
+f(2..61).
+n(2..61).
+
+valid_k(P, Q, K) :-
+    prime(P),
+    prime(Q),
+    P + Q = 63,
+    K = P * Q.
+
+unique_ks(K) :-
+    valid_k(_, _, K),
+    not exists_smaller(K, K2).
+
+exists_smaller(K, K2) :-
+    valid_k(_, _, K2),
+    K2 < K.
+
+count_unique_ks(C) :-
+    C = #count{K : unique_ks(K)}.
+
+answer(C) :-
+    count_unique_ks(C).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmppg1egumx/program.lp:12:7-10: error: syntax error, unexpected <IDENTIFIER>
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 8
+ORIGINAL INDEX: 44
+ANSWER: 6
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+A chess team has $26$ members. However, only $16$ members attended the last meeting: half of the girls attended but all of the boys attended. How many boys are on the chess team?
+
+PROLOG PROGRAM:
+solve :-
+    between(0,26,B),
+    G is 26 - B,
+    Attend is B + G/2,
+    Attend =:= 16,
+    write(B), !.
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+b(0..26).
+
+total_members(26).
+meeting_attendees(16).
+
+girls(G) :- total_members(Total), b(Boys), G = Total - Boys.
+half_girls_attended(HalfG) :- girls(G), HalfG = G // 2.
+attended_meeting(Boys, HalfG) :- b(Boys), half_girls_attended(HalfG), Boys + HalfG = meeting_attendees.
+
+valid_team(Boys) :- b(Boys), half_girls_attended(HalfG), attended_meeting(Boys, HalfG).
+
+answer(Boys) :- valid_team(Boys).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp3ydf740z/program.lp:7:52-53: error: syntax error, unexpected /
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 9
+ORIGINAL INDEX: 48
+ANSWER: -\frac12
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Solve  \[\frac{x^2+x+1}{x+1}=x+2\]for $x$.
+
+PROLOG PROGRAM:
+expr(X,L,R) :- L is (X*X + X + 1)/(X + 1), R is X + 2.
+
+gcd(A,B,G) :- (B=:=0 -> G is abs(A) ; R is A mod B, gcd(B,R,G)).
+
+reduce_frac(N,D,Nr,Dr) :- gcd(N,D,G), Nr is N//G, Dr is D//G.
+
+solve :-
+    between(-50,50,N), between(1,50,D),
+    X is N/D,
+    abs(X+1) > 1e-12,
+    expr(X,L,R), abs(L-R) < 1e-9,
+    reduce_frac(N,D,Nr,Dr),
+    ( Nr<0 -> P is -Nr, atomic_list_concat(['-\\frac{',P,'}{',Dr,'}'],S)
+    ; atomic_list_concat(['\\frac{',Nr,'}{',Dr,'}'],S)
+    ),
+    write(S), !.
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+n(-50..50).
+d(1..50).
+
+expr(X,L,R) :- L = (X*X + X + 1)/(X + 1), R = X + 2.
+
+gcd(A,0,A).
+gcd(A,B,G) :- B != 0, R = A % B, gcd(B,R,G).
+
+reduce_frac(N,D,Nr,Dr) :- gcd(N,D,G), Nr = N / G, Dr = D / G.
+
+valid_solution(N,D) :-
+    n(N),
+    d(D),
+    X = N / D,
+    abs(X + 1) > 0,
+    expr(X,L,R),
+    abs(L - R) < 1,
+    reduce_frac(N,D,Nr,Dr).
+
+answer(S) :-
+    valid_solution(N,D),
+    Nr = -N,
+    Dr = D,
+    S = "-\\frac{" + Nr + "}{ " + Dr + "}".
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp6vgu5q8x/program.lp:9:1-12: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 10
+ORIGINAL INDEX: 50
+ANSWER: \frac{29}{4}
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Given that the point $(9,7)$ is on the graph of $y=f(x)$, there is one point that must be on the graph of $2y=\frac{f(2x)}2+2$. What is the sum of coordinates of that point?
+
+PROLOG PROGRAM:
+frac_add(N1,D1,N2,D2,N,D) :- N is N1*D2 + N2*D1, D is D1*D2.
+frac_mul(N1,D1,N2,D2,N,D) :- N is N1*N2, D is D1*D2.
+frac_simplify(N0,D0,N,D) :- G is gcd(N0,D0), N is N0//G, D is D0//G.
+
+solve :-
+
+    A is 9, B is 7,
+
+    Xn is A, Xd is 2,
+
+    Bn is B, Bd is 2,
+
+    frac_add(Bn,Bd,2,1,Tn,Td),
+
+    frac_mul(Tn,Td,1,2,Yn_raw,Yd_raw),
+    frac_simplify(Yn_raw,Yd_raw,Yn,Yd),
+
+    frac_add(Xn,Xd,Yn,Yd,Sn_raw,Sd_raw),
+    frac_simplify(Sn_raw,Sd_raw,Sn,Sd),
+
+    number_string(Sn,SNs), number_string(Sd,SDs),
+    atomic_list_concat(['\\frac{',SNs,'}{',SDs,'}'],Out),
+    write(Out).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+a(9).
+b(7).
+
+x_n(9).
+x_d(2).
+
+b_n(7).
+b_d(2).
+
+frac_add(N1,D1,N2,D2,N,D) :-
+    N = N1*D2 + N2*D1,
+    D = D1*D2.
+
+frac_mul(N1,D1,N2,D2,N,D) :-
+    N = N1*N2,
+    D = D1*D2.
+
+gcd(0, Y, Y).
+gcd(X, 0, X).
+gcd(X, Y, G) :-
+    X > 0,
+    Y > 0,
+    X1 = X % Y,
+    gcd(X1, Y, G).
+
+frac_simplify(N0,D0,N,D) :-
+    gcd(N0,D0,G),
+    N = N0 / G,
+    D = D0 / G.
+
+frac_add(b_n,b_d,2,1,Tn,Td).
+
+frac_mul(Tn,Td,1,2,Yn_raw,Yd_raw).
+frac_simplify(Yn_raw,Yd_raw,Yn,Yd).
+
+frac_add(x_n,x_d,Yn,Yd,Sn_raw,Sd_raw).
+frac_simplify(Sn_raw,Sd_raw,Sn,Sd).
+
+answer(Sum) :-
+    Sum = Sn + Sd.
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp2juff5vk/program.lp:24:5-8: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 11
+ORIGINAL INDEX: 55
+ANSWER: 6
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Suppose that all four of the numbers \[3 - 2\sqrt{2}, \; -3-2\sqrt{2}, \; 1+\sqrt{7}, \; 1-\sqrt{7}\]are roots of the same nonzero polynomial with rational coefficients. What is the smallest possible degree of the polynomial?
+
+PROLOG PROGRAM:
+rad_decomp(A + B*sqrt(C), A, B, C).
+rad_decomp(A - B*sqrt(C), A, NB, C) :- NB is -B.
+
+rad_conj(A,B,C, A, NB) :- NB is -B.
+
+root_triple(Expr, A,B,C) :- rad_decomp(Expr,A,B,C), !.
+root_triple(R, R,0,1).
+
+conjugate((A,B,C), (A,NB,C)) :- NB is -B.
+
+original_triples(Ts) :-
+    Ts = [ (3,-2,2), (-3,-2,2), (1,1,7), (1,-1,7) ].
+
+required_conjugates(Triples, All) :-
+    findall(T2,
+        (
+            member(T,Triples),
+            (   T = (A,B,C), C > 1
+            ->  conjugate((A,B,C), T2)
+            ;   T2 = T
+            )
+        ), L),
+    append(Triples,L,L2), sort(L2,All).
+
+solve :-
+    original_triples(T0),
+    required_conjugates(T0,All),
+    length(All,Deg),
+    write(Deg).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+a(3..3).
+a(-3..-3).
+a(1..1).
+
+b(-2..-2).
+b(1..1).
+b(-1..-1).
+
+c(2..2).
+c(7..7).
+
+rad_decomp(3,-2,2).
+rad_decomp(-3,-2,2).
+rad_decomp(1,1,7).
+rad_decomp(1,-1,7).
+
+conjugate(A,B,C,A,NB,C) :- b(B), b(NB), NB = -B.
+
+original_triples(3,-2,2).
+original_triples(-3,-2,2).
+original_triples(1,1,7).
+original_triples(1,-1,7).
+
+required_triples(A,B,C) :- original_triples(A,B,C).
+required_triples(A,NB,C) :- original_triples(A,B,C), c(C), C > 1, conjugate(A,B,C,A,NB,C).
+
+unique_triples(A,B,C) :- required_triples(A,B,C), not required_triples(A1,B1,C1) : (A1 < A ; (A1 = A, B1 < B) ; (A1 = A, B1 = B, C1 < C)).
+
+count_triples(C) :- C = #count { A,B,C : unique_triples(A,B,C) }.
+
+answer(C) :- count_triples(C).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpejmlqsg9/program.lp:27:88-89: error: syntax error, unexpected <, expecting )
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 12
+ORIGINAL INDEX: 60
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+The nine points of this grid are equally spaced horizontally and vertically.  The distance between two neighboring points is 1 unit.  What is the area, in square units, of the region where the two triangles overlap?
+
+[asy]
+size(80);
+dot((0,0)); dot((0,1));dot((0,2));dot((1,0));dot((1,1));dot((1,2));dot((2,0));dot((2,1));dot((2,2));
+draw((0,0)--(2,1)--(1,2)--cycle, linewidth(0.6));
+draw((2,2)--(0,1)--(1,0)--cycle, linewidth(0.6));
+[/asy]
+
+PROLOG PROGRAM:
+pt(v1,2/3,1/3). pt(v2,1/3,2/3). pt(v3,2/3,4/3). pt(v4,4/3,5/3). pt(v5,5/3,4/3). pt(v6,4/3,2/3).
+verts([v1,v2,v3,v4,v5,v6]).
+coord(P,X,Y):-pt(P,X,Y).
+shoelace([_],Acc,Acc).
+shoelace([P1,P2|R],Acc,Res):-coord(P1,X1,Y1),coord(P2,X2,Y2),Acc1 is Acc+X1*Y2-X2*Y1,shoelace([P2|R],Acc1,Res).
+polygon_area(Pts,A):-Pts=[F|_],append(Pts,[F],C),shoelace(C,0,S),A is abs(S)/2.
+solve:-verts(Vs),polygon_area(Vs,A),Ans is round(A),write(Ans).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+point(v1,2,1).
+point(v2,1,2).
+point(v3,2,4).
+point(v4,4,5).
+point(v5,5,4).
+point(v6,4,2).
+
+vertex(v1).
+vertex(v2).
+vertex(v3).
+vertex(v4).
+vertex(v5).
+vertex(v6).
+
+coordinate(P,X,Y) :- point(P,X,Y).
+
+shoelace(Pts,Acc,Acc) :- Pts = [].
+shoelace([P1,P2|Rest],Acc,Res) :-
+    coordinate(P1,X1,Y1),
+    coordinate(P2,X2,Y2),
+    Acc1 = Acc + X1 * Y2 - X2 * Y1,
+    shoelace([P2|Rest],Acc1,Res).
+
+polygon_area(Pts,A) :-
+    Pts = [F|_],
+    append(Pts,[F],C),
+    shoelace(C,0,S),
+    A = abs(S) / 2.
+
+calculate_area :-
+    vertex(V1),
+    vertex(V2),
+    vertex(V3),
+    vertex(V4),
+    vertex(V5),
+    vertex(V6),
+    polygon_area([V1,V2,V3,V4,V5,V6],A),
+    Ans = round(A),
+    answer(Ans).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp1u3tu5ld/program.lp:17:32-33: error: syntax error, unexpected [
+
+/tmp/tmp1u3tu5ld/program.lp:18:10-11: error: syntax error, unexpected [, expecting ) or ;
+
+/tmp/tmp1u3tu5ld/program.lp:25:11-12: error: syntax error, unexpected [
+
+/tmp/tmp1u3tu5ld/program.lp:37:18-19: error: syntax error, unexpected [, expecting ) or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 13
+ORIGINAL INDEX: 61
+ANSWER: CD
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+The figure drawn is not to scale. Which of the five segments shown is the longest? [asy]
+pair A = (-3,0), B=(0,2), C=(3,0), D=(0,-1);
+draw(D(MP("A", A, W))--D(MP("B", B, N))--D(MP("C", C, E))--D(MP("D", D, S))--A);
+draw(B--D);
+MP("55^\circ", (0,-0.75), NW);
+MP("55^\circ", (0,-0.75), NE);
+MP("40^\circ", (0,1.5), SW);
+MP("75^\circ", (0,1.5), SE);
+[/asy]
+
+PROLOG PROGRAM:
+side(ad).
+side(ab).
+side(bd).
+side(bc).
+side(cd).
+
+longer(ab,ad).
+longer(bd,ab).
+longer(bc,bd).
+longer(cd,bc).
+
+longer_eq(X,Y) :- longer(X,Y).
+longer_eq(X,Y) :- longer(X,Z), longer_eq(Z,Y).
+
+max_side(S) :-
+    side(S),
+    \+ (side(T), longer_eq(T,S)).
+
+solve :-
+    max_side(S),
+
+    ( S = ad -> write('AD')
+    ; S = ab -> write('AB')
+    ; S = bd -> write('BD')
+    ; S = bc -> write('BC')
+    ; S = cd -> write('CD')
+    ).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+side(ad).
+side(ab).
+side(bd).
+side(bc).
+side(cd).
+
+longer(ab,ad).
+longer(bd,ab).
+longer(bc,bd).
+longer(cd,bc).
+
+longer_eq(X,Y) :- longer(X,Y).
+longer_eq(X,Y) :- longer(X,Z), longer_eq(Z,Y).
+
+max_side(S) :-
+    side(S),
+    not (side(T), longer_eq(T,S)).
+
+answer(cd) :- max_side(cd).
+answer(bc) :- max_side(bc).
+answer(bd) :- max_side(bd).
+answer(ab) :- max_side(ab).
+answer(ad) :- max_side(ad).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpwbrfip2r/program.lp:17:34-35: error: syntax error, unexpected .
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 14
+ORIGINAL INDEX: 62
+ANSWER: 8
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Grady distributed $x$ pieces of candy evenly among nine Halloween bags such that every bag received the greatest possible number of whole pieces of candy, but some candy was left over. What is the greatest possible number of pieces that could have been left over?
+
+PROLOG PROGRAM:
+solve :-
+    findall(R,(between(1,200,X), R is X mod 9), L),
+    max_list(L,M), write(M).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+x(1..200).
+r(0..8).
+
+remainder(X,R) :-
+    x(X),
+    r(R),
+    R = X % 9.
+
+larger_remainder(R1) :-
+    remainder(_,R1),
+    remainder(_,R2),
+    R2 > R1.
+
+max_remainder(R) :-
+    remainder(_,R),
+    not larger_remainder(R).
+
+answer(R) :-
+    max_remainder(R).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpymkd2hhj/program.lp:9:1-17: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 15
+ORIGINAL INDEX: 63
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+For a given positive integer $n > 2^3$, what is the greatest common divisor of $n^3 + 3^2$ and $n + 2$?
+
+PROLOG PROGRAM:
+my_gcd(A,0,A):-!.
+my_gcd(A,B,G):-R is A mod B,my_gcd(B,R,G).
+
+gcd_list([X],X).
+gcd_list([X|Xs],G):- gcd_list(Xs,G1), my_gcd(X,G1,G).
+
+all_gcds(Gs):-
+    findall(G,
+        (
+            between(9,300,N),
+            A is N*N*N + 9,
+            B is N + 2,
+            my_gcd(A,B,G)
+        ),Gs).
+
+solve :- all_gcds(Gs), gcd_list(Gs,Ans), write(Ans).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+n(9..300).
+
+gcd(A, 0, A).
+gcd(A, B, G) :- R = A % B, gcd(B, R, G).
+
+compute_gcd(N, G) :-
+    n(N),
+    A = N * N * N + 9,
+    B = N + 2,
+    gcd(A, B, G).
+
+collect_gcds(G) :-
+    compute_gcd(_, G).
+
+gcd_list([G], G).
+gcd_list([G|Gs], FinalG) :-
+    gcd_list(Gs, G1),
+    gcd(G, G1, FinalG).
+
+final_gcd(FinalG) :-
+    collect_gcds(Gs),
+    gcd_list(Gs, FinalG).
+
+answer(FinalG) :-
+    final_gcd(FinalG).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpcg4h5z6b/program.lp:6:1-12: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+/tmp/tmpcg4h5z6b/program.lp:15:10-11: error: syntax error, unexpected [, expecting ) or ;
+
+/tmp/tmpcg4h5z6b/program.lp:16:10-11: error: syntax error, unexpected [, expecting ) or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 16
+ORIGINAL INDEX: 64
+ANSWER: 3
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+The digits of a two-digit number $AB$ are reversed to form a second two-digit number, and the lesser of the two-digit numbers is subtracted from the greater. What prime number must be a factor of the difference if $A\neq B$?
+
+PROLOG PROGRAM:
+my_gcd(A,0,A):-!.
+my_gcd(A,B,G):-R is A mod B,my_gcd(B,R,G).
+
+gcd_list([X],X).
+gcd_list([X|Xs],G):-gcd_list(Xs,G1),my_gcd(X,G1,G).
+
+is_prime(P):-P>1,Upper is floor(sqrt(P)),\+((between(2,Upper,D),P mod D=:=0)).
+
+all_diffs(Ds):-
+    findall(D,(between(1,9,A),between(0,9,B),A\=B,
+        X is 10*A+B, Y is 10*B+A, D is abs(X-Y)),Ds).
+
+prime_factors(N,Ps):-findall(P,(between(2,N,P),is_prime(P),N mod P=:=0),L),sort(L,Ps).
+
+solve :- all_diffs(Ds), gcd_list(Ds,G), prime_factors(G,[Ans|_]), write(Ans).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+a(1..9).
+b(0..9).
+
+number(A, B, N) :- a(A), b(B), N = 10*A + B.
+reverse_number(A, B, RN) :- a(A), b(B), RN = 10*B + A.
+difference(A, B, D) :- a(A), b(B), A != B, number(A, B, N), reverse_number(A, B, RN), D = abs(N - RN).
+
+gcd(X, 0, X).
+gcd(X, Y, G) :- X > 0, Y > 0, R = X % Y, gcd(Y, R, G).
+
+gcd_list([X], X).
+gcd_list([X|Xs], G) :- gcd_list(Xs, G1), gcd(X, G1, G).
+
+is_prime(P) :- P > 1, not (D = 2..P-1, P % D = 0).
+
+all_diffs(Ds) :- Ds = [D : difference(A, B, D)].
+
+prime_factors(N, Ps) :- Ps = [P : P = 2..N, is_prime(P), N % P = 0].
+
+answer(Ans) :- all_diffs(Ds), gcd_list(Ds, G), prime_factors(G, [Ans|_]).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp1nh75rjo/program.lp:11:1-9: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+/tmp/tmp1nh75rjo/program.lp:12:10-11: error: syntax error, unexpected [, expecting ) or ;
+
+/tmp/tmp1nh75rjo/program.lp:14:30-31: error: syntax error, unexpected =, expecting )
+
+/tmp/tmp1nh75rjo/program.lp:18:30-31: error: syntax error, unexpected [
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 17
+ORIGINAL INDEX: 65
+ANSWER: 1
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Let $n$ be a positive integer and $a,b$ be invertible integers modulo $n$ such that $a\equiv b^{-1}\pmod n$. What is the remainder when $ab$ is divided by $n$?
+
+PROLOG PROGRAM:
+mod_inverse(B,N,A):-
+    between(1,N,A),
+    (A*B) mod N =:= 1.
+
+invertible(B,N):- mod_inverse(B,N,_).
+
+all_products(N,Vals):-
+    findall(Prod,
+        (
+            between(1,N,B),
+            invertible(B,N),
+            mod_inverse(B,N,A),
+            Prod is (A*B) mod N
+        ),Vals).
+
+solve :-
+    N = 50,
+    all_products(N,Vals),
+    sort(Vals,Unique),
+    Unique = [R],
+    write(R).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+n(50).
+b(1..50).
+a(1..50).
+
+mod_inverse(B,N,A) :-
+    b(B),
+    n(N),
+    a(A),
+    (A*B) % N = 1.
+
+invertible(B,N) :-
+    b(B),
+    n(N),
+    mod_inverse(B,N,_).
+
+product(B,N,Prod) :-
+    b(B),
+    n(N),
+    invertible(B,N),
+    mod_inverse(B,N,A),
+    Prod = (A*B) % N.
+
+unique_product(N,R) :-
+    n(N),
+    product(_,N,Prod),
+    R = Prod,
+    not (product(_,N,Prod2), Prod2 != R).
+
+answer(R) :-
+    unique_product(50,R).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpwq22h3xp/program.lp:11:1-11: error: syntax error, unexpected <IDENTIFIER>
+
+/tmp/tmpwq22h3xp/program.lp:23:1-15: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 18
+ORIGINAL INDEX: 66
+ANSWER: 5
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+What is the greatest positive integer that must divide the sum of the first ten terms of any arithmetic sequence whose terms are positive integers?
+
+PROLOG PROGRAM:
+g(A,0,A):-A>0,!.
+g(A,B,G):-R is A mod B, g(B,R,G).
+
+sum10(A,D,S) :- S is 10*A + 45*D.
+
+all_sums(Sums) :-
+    findall(S,
+        (
+            between(1,200,A),
+            between(1,200,D),
+            sum10(A,D,S)
+        ), Sums).
+
+list_gcd([X],X).
+list_gcd([X|Xs],G):-list_gcd(Xs,G1), g(X,G1,G).
+
+solve :-
+    all_sums(Ss),
+    list_gcd(Ss,G),
+    write(G).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+a(1..200).
+d(1..200).
+
+sum10(A,D,S) :-
+    a(A),
+    d(D),
+    S = 10*A + 45*D.
+
+gcd(A,0,A) :- A > 0.
+gcd(A,B,G) :-
+    A > 0,
+    R = A % B,
+    gcd(B, R, G).
+
+compute_gcd(S, G) :-
+    sum10(A, D, S),
+    gcd(S, 0, G).
+
+all_gcds(G) :-
+    sum10(_, _, S),
+    compute_gcd(S, G).
+
+max_gcd(G) :-
+    all_gcds(G),
+    not exists_larger_gcd(G).
+
+exists_larger_gcd(G) :-
+    all_gcds(G1),
+    G1 > G.
+
+answer(G) :-
+    max_gcd(G).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpoigd314h/program.lp:13:5-8: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 19
+ORIGINAL INDEX: 67
+ANSWER: 6
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+What is the greatest whole number that must be a divisor of the product of any three consecutive positive integers?
+
+PROLOG PROGRAM:
+g(A,0,A):-A>0,!.
+g(A,B,G):-R is A mod B, g(B,R,G).
+
+prod3(N,P):- P is N*(N+1)*(N+2).
+
+all_products(Products):-
+    findall(P,
+        (
+            between(1,500,N),
+            prod3(N,P)
+        ),Products).
+
+list_gcd([X],X).
+list_gcd([X|Xs],G):-list_gcd(Xs,G1), g(X,G1,G).
+
+solve :-
+    all_products(Ps),
+    list_gcd(Ps,G),
+    write(G).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+n(1..500).
+p(1..100000000).
+
+gcd(A, 0, A) :- A > 0.
+gcd(A, B, G) :- R = A % B, gcd(B, R, G).
+
+prod3(N, P) :- P = N * (N + 1) * (N + 2).
+
+product(N, P) :- n(N), prod3(N, P).
+
+list_gcd([X], X).
+list_gcd([X|Xs], G) :- list_gcd(Xs, G1), gcd(X, G1, G).
+
+products(Ps) :- Ps = #count { P : product(_, P) }.
+
+gcd_all(Ps, G) :- list_gcd(Ps, G).
+
+answer(G) :- products(Ps), gcd_all(Ps, G).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmp8ztuv56g/program.lp:7:1-6: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+/tmp/tmp8ztuv56g/program.lp:11:10-11: error: syntax error, unexpected [, expecting ) or ;
+
+/tmp/tmp8ztuv56g/program.lp:12:10-11: error: syntax error, unexpected [, expecting ) or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 20
+ORIGINAL INDEX: 68
+ANSWER: 3
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Let $A$ be the set of all numbers which can be represented as the sum of three consecutive positive integers. What is the greatest common divisor of all numbers in $A$?
+
+PROLOG PROGRAM:
+g(A,0,A):-A>0,!.
+g(A,B,G):-R is A mod B, g(B,R,G).
+
+sum3(X,S):- S is 3*X + 3.
+
+all_values(Vs):-
+    findall(S,
+        (
+            between(1,300,X),
+            sum3(X,S)
+        ),Vs).
+
+list_gcd([X],X).
+list_gcd([X|Xs],G):-list_gcd(Xs,G1), g(X,G1,G).
+
+solve :-
+    all_values(Vs),
+    list_gcd(Vs,G),
+    write(G).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+x(1..300).
+
+sum3(X,S) :- x(X), S = 3 * X + 3.
+
+value(S) :- sum3(_,S).
+
+gcd(A,0,A) :- A > 0.
+gcd(A,B,G) :- R = A % B, gcd(B,R,G).
+
+values(G) :- value(S1), value(S2), gcd(S1,S2,G1), gcd(S2,G1,G).
+
+answer(G) :- value(S), values(G), gcd(S,G,G).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpw3le9dmx/program.lp:10:1-7: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 21
+ORIGINAL INDEX: 69
+ANSWER: \frac34
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Of the numbers $\frac{7}{10}, \frac{4}{5}$ and $\frac{3}{4}$, which number is the arithmetic mean of the other two?
+
+PROLOG PROGRAM:
+gcd(A,0,A):-A>0,!.
+gcd(A,B,G):-R is A mod B, gcd(B,R,G).
+
+simplify_frac(N,D,frac(N1,D1)):-
+    (D<0 -> N2 is -N, D2 is -D ; N2=N, D2=D),
+    gcd(abs(N2),abs(D2),G),
+    N1 is N2//G,
+    D1 is D2//G.
+
+add_frac(frac(A,B),frac(C,D),R):-
+    N is A*D + B*C,
+    Den is B*D,
+    simplify_frac(N,Den,R).
+
+half_frac(frac(N,D),R):- simplify_frac(N,2*D,R).
+
+is_mean(M,X,Y):- add_frac(X,Y,S), half_frac(S,M).
+
+vals([frac(7,10), frac(4,5), frac(3,4)]).
+
+pick3([A,B,C],A,B,C).
+pick3([A,B,C],A,C,B).
+pick3([A,B,C],B,A,C).
+pick3([A,B,C],B,C,A).
+pick3([A,B,C],C,A,B).
+pick3([A,B,C],C,B,A).
+
+solve :-
+    vals(V),
+    pick3(V,X,Y,Z),
+    is_mean(M,X,Y),
+    M = Z,
+    write(M).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+numerator(7).
+denominator(10).
+
+numerator(4).
+denominator(5).
+
+numerator(3).
+denominator(4).
+
+value(frac(7,10)).
+value(frac(4,5)).
+value(frac(3,4)).
+
+gcd(A,0,A) :- A > 0.
+gcd(A,B,G) :- R = A % B, gcd(B,R,G).
+
+simplify_frac(N,D,N1,D1) :-
+    (D < 0 -> N2 = -N, D2 = -D ; N2 = N, D2 = D),
+    gcd(abs(N2), abs(D2), G),
+    N1 = N2 // G,
+    D1 = D2 // G.
+
+add_frac(frac(A,B), frac(C,D), frac(N,Den)) :-
+    N = A * D + B * C,
+    Den = B * D,
+    simplify_frac(N, Den, _, _).
+
+half_frac(frac(N,D), frac(N1,D1)) :-
+    simplify_frac(N, 2 * D, N1, D1).
+
+is_mean(M,X,Y) :-
+    add_frac(X,Y,S),
+    half_frac(S,M).
+
+pick3(X,Y,Z) :-
+    value(X),
+    value(Y),
+    value(Z),
+    X != Y,
+    X != Z,
+    Y != Z.
+
+mean_value(Z) :-
+    pick3(X,Y,Z),
+    is_mean(Z,X,Y).
+
+answer(Z) :-
+    mean_value(Z).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpqlblle2j/program.lp:17:1-14: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 22
+ORIGINAL INDEX: 70
+ANSWER: \frac{1}{10}
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Emma had just been given some coins by her parents.  On the way to school she lost exactly half of them, and then by retracing her steps she found exactly four-fifths of the coins she had lost.  What fraction of the coins that she received from her parents were still missing after Emma retraced her steps? Express your answer as a common fraction.
+
+PROLOG PROGRAM:
+gcd(A,0,A):-A>0,!.
+gcd(A,B,G):-R is A mod B, gcd(B,R,G).
+
+simplify(N,D,frac(N1,D1)):-
+    (D<0 -> N2 is -N, D2 is -D ; N2=N, D2=D),
+    gcd(abs(N2),abs(D2),G),
+    N1 is N2//G,
+    D1 is D2//G.
+
+mul(frac(A,B), frac(C,D), R):- simplify(A*C, B*D, R).
+
+sub(frac(A,B), frac(C,D), R):- simplify(A*D - B*C, B*D, R).
+
+solve :-
+
+    Total = frac(1,1),
+
+    mul(Total, frac(1,2), Lost),
+
+    mul(Lost, frac(4,5), Found),
+
+    sub(Lost, Found, Missing),
+
+    write(Missing).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+numerator(-100..100).
+denominator(1..100).
+
+gcd(A,0,A) :- A > 0.
+gcd(A,B,G) :- B > 0, R = A % B, gcd(B,R,G).
+
+simplify(N,D,frac(N1,D1)) :-
+    (D < 0 -> N2 = -N, D2 = -D ; N2 = N, D2 = D),
+    gcd(abs(N2), abs(D2), G),
+    N1 = N2 // G,
+    D1 = D2 // G.
+
+mul(frac(A,B), frac(C,D), frac(RN,RD)) :-
+    simplify(A*C, B*D, frac(RN,RD)).
+
+sub(frac(A,B), frac(C,D), frac(RN,RD)) :-
+    simplify(A*D - B*C, B*D, frac(RN,RD)).
+
+total(frac(1,1)).
+
+lost(frac(1,1), Lost) :-
+    mul(frac(1,1), frac(1,2), Lost).
+
+found(Lost, Found) :-
+    mul(Lost, frac(4,5), Found).
+
+missing(Lost, Found, Missing) :-
+    sub(Lost, Found, Missing).
+
+answer(Missing) :-
+    total(Total),
+    lost(Total, Lost),
+    found(Lost, Found),
+    missing(Lost, Found, Missing).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpkj5hq5bb/program.lp:7:1-9: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 23
+ORIGINAL INDEX: 71
+ANSWER: \frac{3}{4}
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Brand X soda advertises, ``We will give you 20$\%$ more soda than Brand Y for a total price that is 10$\%$ less than Brand Y's price!'' What is the ratio of the unit price of Brand X soda to the unit price of Brand Y soda? Express your answer as a common fraction.
+
+PROLOG PROGRAM:
+my_gcd(A,0,A):-A>0,!.
+my_gcd(A,B,G):-R is A mod B, my_gcd(B,R,G).
+
+simplify(N,D,frac(N1,D1)):-
+    (D<0->N2 is -N, D2 is -D ; N2=N, D2=D),
+    my_gcd(abs(N2),abs(D2),G),
+    N1 is N2//G,
+    D1 is D2//G.
+
+mul(frac(A,B), frac(C,D), R):- simplify(A*C, B*D, R).
+
+frac_div(frac(A,B), frac(C,D), R):- simplify(A*D, B*C, R).
+
+solve :-
+
+    PY = frac(1,1),
+    VY = frac(1,1),
+
+    PX = frac(9,10),
+
+    VX = frac(6,5),
+
+    frac_div(PX, VX, UX),
+    frac_div(PY, VY, UY),
+
+    write(UX).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+gcd(A,0,A) :- A > 0.
+gcd(A,B,G) :- R = A % B, gcd(B,R,G).
+
+simplify(N,D,frac(N1,D1)) :-
+    (D < 0 -> N2 = -N, D2 = -D ; N2 = N, D2 = D),
+    gcd(abs(N2), abs(D2), G),
+    N1 = N2 // G,
+    D1 = D2 // G.
+
+mul(frac(A,B), frac(C,D), frac(RN,RD)) :-
+    simplify(A * C, B * D, frac(RN,RD)).
+
+frac_div(frac(A,B), frac(C,D), frac(RN,RD)) :-
+    simplify(A * D, B * C, frac(RN,RD)).
+
+px(frac(9,10)).
+vy(frac(1,1)).
+vx(frac(6,5)).
+
+ux(frac(RN,RD)) :-
+    px(frac(PXN,PXD)),
+    vx(frac(VXN,VXD)),
+    frac_div(frac(PXN,PXD), frac(VXN,VXD), frac(RN,RD)).
+
+uy(frac(RN,RD)) :-
+    vy(frac(VYN,VYD)),
+    frac_div(frac(VYN,VYD), frac(VYN,VYD), frac(RN,RD)).
+
+answer(frac(RN,RD)) :-
+    ux(frac(RN,RD)).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpkrm5u65d/program.lp:4:1-9: error: syntax error, unexpected <IDENTIFIER>, expecting : or "," or . or ;
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+
+====================================================================================================
+LOCAL INDEX: 24
+ORIGINAL INDEX: 72
+ANSWER: ABCD
+ASP_ERROR_TYPE: syntax_error
+
+INPUT:
+Let   $$x = 64 + 96 + 128 + 160 + 288 + 352 + 3232.$$ Which of the following statements are true?
+
+A. $x$ is a multiple of $4$.
+B. $x$ is a multiple of $8$.
+C. $x$ is a multiple of $16$.
+D. $x$ is a multiple of $32$.
+
+Answer as a list of letters in alphabetical order, separated by commas.  For example, if you think A and C are the true statements, then answer ``A,C" (without the quote marks).
+
+PROLOG PROGRAM:
+total_sum([],0).
+total_sum([H|T],S):- total_sum(T,S1), S is H+S1.
+
+is_mult(N,D):- 0 =:= N mod D.
+
+stmt(4,'A').
+stmt(8,'B').
+stmt(16,'C').
+stmt(32,'D').
+
+collect_letters(S,Ans):-
+    findall(L,
+        (
+            member(D,[4,8,16,32]),
+            stmt(D,L),
+            is_mult(S,D)
+        ),Letters),
+    atomic_list_concat(Letters,',',Ans).
+
+solve :-
+    total_sum([64,96,128,160,288,352,3232],X),
+    collect_letters(X,Ans),
+    write(Ans).
+
+PROLOG QUERY:
+solve.
+
+ASP PROGRAM:
+item(64).
+item(96).
+item(128).
+item(160).
+item(288).
+item(352).
+item(3232).
+
+stmt(4,a).
+stmt(8,b).
+stmt(16,c).
+stmt(32,d).
+
+sum(0) :- not item(_).
+sum(S) :- item(I), sum(S1), S = S1 + I.
+
+multiple(S, D) :- S % D = 0.
+
+collect_letters(S, Ans) :-
+    stmt(D, L),
+    multiple(S, D),
+    answer(L).
+
+answer(Ans) :-
+    sum(S),
+    collect_letters(S, Ans).
+#show answer/1.
+
+ASP ERROR:
+/tmp/tmpm61q0m3z/program.lp:19:1-16: error: syntax error, unexpected <IDENTIFIER>
+
+Traceback (most recent call last):
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/application.py", line 377, in _pyclingo_application_main
+    app.main(Control(control), [_to_str(files[i]) for i in range(size)])
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/__main__.py", line 34, in main
+    control.load(file_)
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/control.py", line 592, in load
+    _handle_error(_lib.clingo_control_load(self._rep, path.encode()))
+  File "/hpc/home/mformenton/.conda/envs/gptoss/lib/python3.11/site-packages/clingo/_internal.py", line 81, in _handle_error
+    raise RuntimeError(msg)
+RuntimeError: parsing failed
+*** ERROR: (pyclingo): parsing failed
+

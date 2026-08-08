@@ -1,0 +1,54 @@
+You are converting Prolog math solutions to clingo ASP.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Produce an ASP program that derives the expected answer.
+
+Rules:
+- Do not output only "#show answer/1.".
+- Do not use Prolog syntax.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Do not use floating point constants.
+- Do not use unsafe variables.
+- Avoid huge domains.
+- Prefer direct finite arithmetic from constants in the problem.
+- It is acceptable to simplify the math using constants from the Prolog program.
+- The final output must derive answer/1.
+
+For factorial:
+- If N is small, compute factorial using a small finite domain 0..N.
+- Safe factorial pattern:
+  n(0..N).
+  fact(0,1).
+  fact(I,F) :- n(I), I > 0, I1 = I - 1, fact(I1,F1), F = I * F1.
+- If only one factorial value is needed and N is a constant, you may replace it with a direct fact.
+- If factorial is used in a combination/permutation formula, prefer direct integer arithmetic with constants.
+- Do not generate domains larger than necessary.
+- Do not recurse without a finite domain.
+
+For combinations:
+- C(n,k) = n! / (k! * (n-k)!).
+- Use integer division "/" in clingo.
+- Keep all intermediate variables safe by deriving them from facts or finite predicates.
+
+Problem:
+{input}
+
+Original Prolog:
+{prolog_program}
+
+Expected answer:
+{answer}
+
+Previous broken ASP:
+{asp_program}

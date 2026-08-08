@@ -1,0 +1,289 @@
+original unsafe_variables profile
+rows: 301
+
+status counts:
+- error::unsafe_variables: 301
+
+pattern counts:
+- equals: 297
+- dangling_comma_line: 275
+- answer_var: 272
+- comparison: 158
+- division_real: 144
+- not_negation: 40
+- sqrt_round_abs: 34
+- aggregate: 33
+- pow_power: 20
+- gcd: 13
+- factorial: 11
+- combination: 8
+- permutation: 7
+- semicolon: 6
+- list_predicates: 4
+- string_quote: 1
+
+common lines:
+- 44x n(N),
+- 35x a(A),
+- 29x answer(Result) :-
+- 26x b(B),
+- 26x answer(X) :-
+- 24x N1 = N - 1,
+- 22x answer(Sum) :-
+- 21x x(X),
+- 18x N > 0,
+- 16x k(K),
+- 15x c(C),
+- 14x x(-100..100).
+- 13x y(Y),
+- 12x r(R),
+- 11x F = N * F1.
+- 11x factorial(0, 1).
+- 11x factorial(N, F) :-
+- 11x factorial(N1, F1),
+- 10x m(M),
+- 9x i(I),
+- 9x y(-100..100).
+- 8x answer(Count) :-
+- 8x angle(Angle),
+- 8x p(P),
+- 7x answer(C) :-
+- 7x N > 1,
+- 7x Exp1 = Exp - 1,
+- 7x permutation(N, R, P) :-
+- 7x factorial(N, NFact),
+- 7x NR = N - R,
+- 7x factorial(NR, NRFact),
+- 7x P = NFact / NRFact.
+- 7x combination(N, R, C) :-
+- 7x permutation(N, R, P),
+- 7x factorial(R, RFact),
+- 7x C = P / RFact.
+- 7x one(One),
+- 7x ab(AB),
+- 6x R = R1 + R2,
+- 6x I = I1 + I2.
+- 6x answer(N) :-
+- 6x value(Y),
+- 6x a(2).
+- 6x Exp > 0,
+- 6x value(X),
+- 6x Result = Base * Result1.
+- 6x gcd(A, B, G) :-
+- 5x valid_k(K) :-
+- 5x answer(D) :-
+- 5x answer(R) :-
+- 5x discriminant(A, B, C, D),
+- 5x answer(K) :-
+- 5x one(1).
+- 5x one_constant(1).
+- 5x DX = X2 - X1,
+- 5x DY = Y2 - Y1,
+- 5x factor(3).
+- 5x cd(CD),
+- 4x answer(S) :-
+- 4x R = R1 * R2 - I1 * I2,
+- 4x answer(M) :-
+- 4x answer(Y) :-
+- 4x answer(A) :-
+- 4x d(D),
+- 4x a(1).
+- 4x valid_x(X) :-
+- 4x q(Q),
+- 4x answer(Value) :-
+- 4x answer(T) :-
+- 4x pow(Base, Exp, Result) :-
+- 4x pow(Base, Exp1, Result1),
+- 4x one_constant(One),
+- 4x compute_result(Result) :-
+- 4x compute_result(Result).
+- 4x Sum = A + B.
+- 4x f(X, Result) :-
+- 4x A = 2,
+- 4x n(1..100).
+- 4x base(Base),
+- 4x z(Z),
+
+head predicates:
+- answer: 306
+- n: 115
+- value: 110
+- a: 92
+- x: 77
+- sqrt: 67
+- pow: 64
+- factorial: 59
+- b: 56
+- gcd: 53
+- prime: 50
+- item: 48
+- f: 45
+- k: 44
+- y: 39
+- point: 39
+- digit: 37
+- c: 36
+- r: 28
+- dot_product: 24
+- valid_solution: 22
+- abs: 22
+- angle: 22
+- combination: 22
+- power: 22
+- p: 21
+- i: 20
+- coeff: 20
+- m: 19
+- result: 19
+- mul: 19
+- add: 18
+- sub: 18
+- g: 18
+- pair: 18
+- term: 17
+- d: 17
+- distance: 17
+- product: 17
+- factor: 15
+- prime_factor: 15
+- denominator: 14
+- color: 14
+- one: 14
+- permutation: 14
+- area: 14
+- ab: 14
+- abs_val: 13
+- discriminant: 13
+- theta: 13
+- perimeter: 13
+- base: 13
+- solution: 12
+- exp: 12
+- root: 12
+- atan: 12
+- reverse_number: 12
+- sum: 11
+- complex_pow: 11
+- valid_number: 11
+- compute_result: 11
+- perm: 11
+- triangle_area: 11
+- index: 11
+- convert: 11
+- valid_k: 10
+- min_value: 10
+- cross_product: 10
+- valid_x: 10
+- q: 10
+- one_constant: 10
+- hexagon: 10
+- subtract: 10
+- distances_squared: 10
+- re: 9
+- x1: 9
+- div: 9
+- exponent: 9
+- abs_diff: 9
+- euclidean_gcd: 9
+
+all predicates/tokens ending with '(':
+- answer: 308
+- value: 139
+- n: 129
+- x: 125
+- a: 103
+- c: 98
+- frac: 89
+- y: 87
+- sqrt: 85
+- gcd: 78
+- b: 76
+- pow: 72
+- factorial: 59
+- f: 54
+- prime: 52
+- item: 50
+- point: 50
+- k: 47
+- digit: 46
+- real_part: 37
+- vector: 33
+- r: 32
+- different: 32
+- abs: 30
+- imag_part: 30
+- p: 29
+- complex: 29
+- round: 27
+- dot_product: 24
+- d: 23
+- power: 23
+- valid_solution: 22
+- angle: 22
+- result: 22
+- combination: 22
+- product: 22
+- coeff: 22
+- add: 21
+- distance: 21
+- i: 20
+- m: 20
+- sub: 20
+- g: 20
+- factor: 20
+- pair: 19
+- mul: 19
+- term: 18
+- list_value: 18
+- theta: 18
+- base: 18
+- solution: 17
+- color: 17
+- prime_factor: 17
+- denominator: 15
+- abs_val: 15
+- discriminant: 15
+- z: 15
+- ab: 15
+- exp: 14
+- one: 14
+- permutation: 14
+- hexagon: 14
+- t: 14
+- perimeter: 14
+- area: 14
+- x1: 13
+- dx: 13
+- re: 12
+- im: 12
+- sum: 12
+- q: 12
+- root: 12
+- atan: 12
+- compute_result: 12
+- euclidean_gcd: 12
+- index: 12
+- reverse_number: 12
+- x2: 11
+- complex_pow: 11
+- valid_number: 11
+- perm: 11
+- dy: 11
+- triangle_area: 11
+- convert: 11
+- valid_k: 10
+- min_value: 10
+- cross_product: 10
+- h: 10
+- y1: 10
+- valid_x: 10
+- one_constant: 10
+- r1: 10
+- r2: 10
+- subtract: 10
+- div: 10
+- distances_squared: 10
+- count_occurrences: 10
+- s: 9
+- digits: 9
+- exponent: 9

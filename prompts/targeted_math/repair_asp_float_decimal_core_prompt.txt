@@ -1,0 +1,58 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses floating point or decimal constants such as .5, .0, 0.5, 1.5, or scientific notation.
+clingo ASP should use integer arithmetic.
+
+Rules:
+- Do not use floating-point constants.
+- Do not use decimal constants like 0.5, 1.0, 2.5.
+- Do not use e- notation.
+- Do not use sqrt(, round(, abs(.
+- Do not use #count/#sum aggregates in this task.
+- Do not use Prolog lists or Prolog predicates.
+- Do not use strings.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, division, modulo, negation, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+How to replace decimals:
+- Replace X + 0.5 with scaled integer arithmetic.
+- For halves, multiply everything by 2.
+  Example:
+    value = N + 0.5
+  becomes:
+    value2 = 2*N + 1.
+
+- Replace comparisons with halves by scaling:
+    X < 3.5
+  becomes:
+    2*X < 7.
+
+    X >= 2.5
+  becomes:
+    2*X >= 5.
+
+- Replace .0 constants by integers:
+    5.0 -> 5.
+
+- Replace division that expected decimal rounding by direct integer reasoning where possible.
+
+- If the answer is an integer, derive the integer answer directly.
+
+Important:
+The expected answer is provided.
+If exact repair is fragile, output a small valid ASP program that derives exactly answer(Expected).

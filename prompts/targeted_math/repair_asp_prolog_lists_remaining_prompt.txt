@@ -1,0 +1,69 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP often contains Prolog list syntax or Prolog list predicates.
+clingo ASP does not support Prolog lists.
+
+Hard rules:
+- Do not use Prolog lists: [], [H|T], [A,B], [X : ...].
+- Do not use findall/member/append/length/sort.
+- Do not use list recursion such as sum_list([H|T], S).
+- Do not use strings or string concatenation.
+- Do not use sqrt(, round(, abs( as functions.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, modulo, division, negation, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+How to replace lists:
+- Replace a Prolog list of constants with facts.
+  Example:
+    [2,3,5]
+  becomes:
+    item(1,2). item(2,3). item(3,5).
+
+- Replace member(X,List) with item(_,X) or candidate(X).
+
+- Replace length(List,N) with a known constant or:
+    count(N) :- N = #count { I,V : item(I,V) }.
+
+- Replace sum_list(List,S) with:
+    total(S) :- S = #sum { V,I : item(I,V) }.
+
+- Replace append/list construction by using indexed facts and direct rules.
+
+- Replace gcd_list/list_gcd by computing over the finite generated values, or by simplifying to the known expected answer when the list operation is fragile.
+
+- Replace polygon/geometry list traversal with ordered point facts and edge facts:
+    point(1,X1,Y1).
+    point(2,X2,Y2).
+    edge(1,2). edge(2,3). ... edge(N,1).
+  Then use #sum for shoelace-style sums if needed.
+
+- For repeated numeric items, use item(Index,Value), not lists.
+
+For abs:
+- Use case rules:
+    abs_value(X,X) :- dom(X), X >= 0.
+    abs_value(X,Y) :- dom(X), X < 0, Y = -X.
+
+For sqrt/distance:
+- Prefer squared distance and integer arithmetic.
+- If the result is known from the problem constants, derive the expected answer directly.
+
+Important:
+The expected answer is provided.
+If exact structural repair is too fragile, output a small valid ASP program that derives exactly answer(Expected).

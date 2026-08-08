@@ -1,0 +1,37 @@
+syntax_error recovered correct examples so far
+Original syntax_error examples: 1994
+Recovered unique correct examples so far: 1343
+
+By selected source:
+- syntax_mechanical_v2: 206
+- prolog_lists_remaining_recovered_current: 174
+- sqrt_round_abs_core_recovered_current: 148
+- gcd_core_clean_recovered_current: 96
+- plain_syntax_remaining_recovered_current: 92
+- aggregate_core_clean_recovered_current: 64
+- factorial_permutation_recovered_current: 59
+- pow_power_recovered_current: 58
+- unknown_nonmod_plain_recovered_current: 56
+- unsafe_variables_core_clean_recovered_current: 51
+- float_decimal_core_clean_recovered_current: 45
+- syntax_unsafe_mechanical_v3: 41
+- if_then_else_remaining_recovered_current: 38
+- unknown_mod_plain_recovered_current: 32
+- syntax_regexfix: 25
+- gcd_recovered_current: 23
+- unsafe_clean_with_error_recovered_current: 20
+- recursive_math_small_mixed_recovered_current: 19
+- factorial_recovered_current: 16
+- syntax_math_functions_targeted_fix: 14
+- syntax_float_decimal_epsilon_targeted_fix: 12
+- aggregate_remaining_core_clean_recovered_current: 12
+- factorial_permutation_core_clean_recovered_current: 11
+- syntax_if_then_else_targeted_fix: 8
+- aggregate_core_plain_current_recovered: 5
+- syntax_bad_mod_predicate_fix: 4
+- sqrt_round_abs_remaining_core_clean_recovered_current: 4
+- float_decimal_remaining_core_clean_recovered_current: 3
+- list_syntax_remaining_recovered_current: 3
+- factorial_pow_power_recovered_current: 2
+- syntax_prolog_lists_to_cons_if_fix: 1
+- factorial_permutation_pow_power_recovered_current: 1

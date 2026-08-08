@@ -1,0 +1,64 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses malformed or unsafe aggregates such as #count, #sum, or braces.
+
+Rules:
+- Use valid clingo aggregate syntax only.
+- Do not use Prolog syntax.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use strings or string concatenation.
+- Do not use sqrt(, round(, abs(.
+- Do not use floating-point constants.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable inside an aggregate must be safe.
+- Every variable outside an aggregate must be safe in the rule body.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Valid aggregate patterns:
+
+Counting:
+  count(N) :- N = #count { X : candidate(X) }.
+
+Counting pairs:
+  count(N) :- N = #count { X,Y : candidate(X,Y) }.
+
+Summing values:
+  total(S) :- S = #sum { V,X : value(X,V) }.
+
+Summing direct terms:
+  total(S) :- S = #sum { V : item(V) }.
+
+Filtering:
+  count(N) :- N = #count { X : candidate(X), X > 0 }.
+
+Safe aggregate rule:
+  answer(N) :- N = #count { X : candidate(X) }.
+
+Do not write malformed aggregates like:
+  #count{...} = N.
+  #sum{...} = S.
+  p(N) :- #count{X : q(X)} = N.
+
+Prefer:
+  p(N) :- N = #count { X : q(X) }.
+
+If the aggregate is too fragile:
+- Use constants from the problem.
+- It is acceptable to simplify and derive exactly answer(Expected).
+
+Expected answer is provided.

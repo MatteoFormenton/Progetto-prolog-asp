@@ -48,43 +48,44 @@ def try_parse_fraction(value: str) -> Fraction | None:
     """
     Provo a interpretare una stringa come frazione.
 
-    Gestisco diversi formati possibili, ad esempio frazioni LaTeX,
-    valori nel formato frac(a,b) oppure numeri decimali/interi.
+    Se il denominatore è zero, ritorno None invece di far crashare il validator.
     """
     text = normalize_text(value)
     text = text.replace(" ", "")
     text = text.replace("$", "")
 
-    # Caso tipo: \frac{1}{2}, eventualmente con segno davanti.
+    def safe_fraction(numerator: int, denominator: int) -> Fraction | None:
+        if denominator == 0:
+            return None
+        return Fraction(numerator, denominator)
+
+    # Caso tipo: \\frac{1}{2}, eventualmente con segno davanti.
     match = re.fullmatch(r"([+-]?)\\frac\{([+-]?\d+)\}\{([+-]?\d+)\}", text)
     if match:
         sign, numerator, denominator = match.groups()
-        result = Fraction(int(numerator), int(denominator))
+        numerator_i = int(numerator)
+        denominator_i = int(denominator)
         if sign == "-":
-            result = -result
-        return result
-    
+            numerator_i = -numerator_i
+        return safe_fraction(numerator_i, denominator_i)
 
-    # Caso tipo: \frac12 oppure \frac123.
-    match = re.fullmatch(r"([+-]?)\\frac(\d)(\d+)", text)
-    if match:
-        sign, numerator, denominator = match.groups()
-        result = Fraction(int(numerator), int(denominator))
-        if sign == "-":
-            result = -result
-        return result
-    
-    # Caso tipo: frac(1,2).
+    # Caso tipo: frac(1,2)
     match = re.fullmatch(r"frac\(([+-]?\d+),([+-]?\d+)\)", text)
     if match:
         numerator, denominator = match.groups()
-        return Fraction(int(numerator), int(denominator))
+        return safe_fraction(int(numerator), int(denominator))
 
-    # Caso numerico semplice: intero o decimale.
-    if re.fullmatch(r"[+-]?\d+(\.\d+)?", text):
+    # Caso tipo: 1/2
+    match = re.fullmatch(r"([+-]?\d+)/([+-]?\d+)", text)
+    if match:
+        numerator, denominator = match.groups()
+        return safe_fraction(int(numerator), int(denominator))
+
+    # Interi o decimali.
+    try:
         return Fraction(text)
-
-    return None
+    except Exception:
+        return None
 
 
 def normalize_for_compare(value: str) -> str:

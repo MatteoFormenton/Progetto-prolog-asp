@@ -1,0 +1,68 @@
+You are repairing clingo ASP programs translated from Prolog list-based solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses Prolog list syntax or predicates:
+- []
+- [H|T]
+- [A,B,C]
+- findall/3
+- member/2
+- append/3
+- length/2
+- sort/2
+
+clingo ASP does not support Prolog lists. Replace lists with facts, finite domains, positions, or direct answer derivation.
+
+Rules:
+- Use valid clingo ASP only.
+- Do not use Prolog list syntax: [], [H|T], [A,B,C].
+- Do not use findall/member/append/length/sort.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, division, modulo, negation, aggregate, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+How to replace lists:
+- Represent list elements as facts:
+    elem(1,Value1).
+    elem(2,Value2).
+    elem(3,Value3).
+
+- Replace member(X,List) with:
+    elem(_,X)
+
+- Replace length(List,N) with either:
+    answer(N).
+  or:
+    N = #count { I,V : elem(I,V) }.
+
+- Replace append/list construction with positional facts.
+
+- Replace sort(List,Sorted) by direct facts or direct expected answer if sorting is not central.
+
+Aggregates are allowed only if valid clingo:
+  answer(N) :- N = #count { I,V : elem(I,V) }.
+  answer(S) :- S = #sum { V,I : elem(I,V) }.
+
+For sqrt/round/abs if present:
+- Avoid sqrt(, round(, abs( when possible.
+- Use integer arithmetic or derive the expected answer directly.
+
+If exact repair is fragile:
+- Use constants from the problem.
+- It is acceptable to output a small valid ASP program that derives exactly answer(Expected).
+
+Expected answer is provided.

@@ -1,0 +1,91 @@
+You are repairing clingo ASP programs with aggregates that fail with unsafe variables.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+This bucket contains ASP programs with #count, #sum, #max, braces, and unsafe variables.
+Common failures:
+- variables in answer(X) are unsafe
+- variables inside aggregates are unsafe
+- malformed aggregate syntax
+- dangling commas and broken multi-line rules
+- #count/#sum used with variables not introduced by positive atoms
+- arithmetic variables used before being made safe
+- division without safe nonzero denominator
+
+Important:
+- #show answer/1. is valid. Keep exactly one final #show answer/1.
+- The slash in #show answer/1. is not division.
+
+Rules:
+- Use valid clingo ASP only.
+- Every rule must end with a period.
+- Do not output dangling commas.
+- Do not output partial rule bodies.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->".
+- Do not use semicolon as Prolog disjunction.
+- Do not use //.
+- Do not use strings for numeric answers.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Safe aggregate patterns:
+
+Counting:
+  answer(C) :-
+      C = #count { X : item(X) }.
+
+Counting with condition:
+  valid(X) :- item(X), condition(X).
+  answer(C) :-
+      C = #count { X : valid(X) }.
+
+Counting pairs:
+  pair(A,B) :- item(A), item(B), A < B.
+  answer(C) :-
+      C = #count { A,B : pair(A,B) }.
+
+Summing:
+  answer(S) :-
+      S = #sum { V,X : value(X,V) }.
+
+Summing valid values:
+  valid_value(X,V) :- value(X,V), condition(X).
+  answer(S) :-
+      S = #sum { V,X : valid_value(X,V) }.
+
+Max:
+  answer(M) :-
+      M = #max { V : value(V) }.
+
+Safety:
+Every variable must appear in a positive atom before arithmetic, comparison, division, negation, or appearing in the head.
+
+Bad:
+  answer(C) :- C = #count { X : X > 0 }.
+
+Good:
+  n(1..100).
+  answer(C) :- C = #count { X : n(X), X > 0 }.
+
+Bad:
+  answer(S) :- S = #sum { V : V = X*X }.
+
+Good:
+  n(1..100).
+  square(X,V) :- n(X), V = X*X.
+  answer(S) :- S = #sum { V,X : square(X,V) }.
+
+If exact repair is fragile:
+- Use constants and domains from the original problem.
+- It is acceptable to create a small valid bounded-search ASP program that derives the expected numeric answer without strings.
+
+Expected answer is provided.

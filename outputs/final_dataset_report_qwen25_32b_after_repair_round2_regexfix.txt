@@ -1,0 +1,12 @@
+Final dataset report
+Input file: /hpc/groups/users-ai/mformenton/Progetto-prolog-asp/data/asp_checked.jsonl
+Output file: /hpc/groups/users-ai/mformenton/Progetto-prolog-asp/data/final_dataset.jsonl
+Total checked examples: 4950
+Included valid examples: 1837
+Discarded invalid examples: 3113
+
+Final JSONL fields:
+- input
+- prolog_program
+- prolog_query
+- asp_program

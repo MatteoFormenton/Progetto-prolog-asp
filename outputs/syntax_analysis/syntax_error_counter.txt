@@ -1,0 +1,50 @@
+  899  unexpected <IDENTIFIER>, expecting : or "," or . or ;
+  663  unexpected /
+  541  unexpected [, expecting ) or ;
+  520  unexpected <IDENTIFIER>
+  306  unexpected ., expecting ) or ;
+  214  unexpected [
+  101  unexpected >, expecting )
+   98  unexpected <IDENTIFIER>, expecting )
+   92  UNKNOWN_SYNTAX_PATTERN
+   91  unexpected =, expecting )
+   85  unexpected <, expecting )
+   60  unexpected .
+   55  unexpected <VARIABLE>, expecting : or "," or . or ;
+   55  unexpected ","
+   30  unexpected <NUMBER>
+   25  unexpected (
+   24  unexpected >=, expecting )
+   21  unexpected <ANONYMOUS>, expecting ) or ;
+   17  unexpected ., expecting )
+   15  unexpected <=, expecting )
+   12  unexpected >
+   12  unexpected <VARIABLE>
+   10  unexpected !=, expecting )
+   10  unexpected )
+    7  unexpected <NUMBER>, expecting : or "," or . or ;
+    7  unexpected (, expecting : or "," or . or ;
+    7  unexpected #showsig, expecting : or "," or . or ;
+    6  unexpected \
+    6  unexpected <IDENTIFIER>, expecting ) or ;
+    6  unexpected not
+    6  unexpected +, expecting "," or . or ;
+    5  unexpected :
+    4  unexpected =, expecting ) or ;
+    4  unexpected }
+    4  unexpected <IDENTIFIER>, expecting . or :-
+    4  unexpected (, expecting {
+    3  unexpected >, expecting ) or ;
+    3  unexpected <, expecting ) or ;
+    3  unexpected not, expecting )
+    3  unexpected EOF, expecting ) or ;
+    3  unexpected *, expecting "," or . or ;
+    2  unexpected :-, expecting )
+    2  unexpected =, expecting } or ;
+    2  unexpected /, expecting "," or . or ;
+    2  unexpected <NUMBER>, expecting ) or ;
+    2  unexpected *, expecting . or :-
+    2  unexpected :, expecting ) or ;
+    2  unexpected :, expecting } or ;
+    2  unexpected <VARIABLE>, expecting )
+    1  unexpected #minimize

@@ -1,0 +1,17 @@
+unsafe_variables remaining after current recovery
+Recovered unique: 141
+remaining: 160
+skipped_recovered: 141
+
+Features:
+division: 160
+answer_var: 160
+dangling_comma: 147
+pow_power: 21
+factorial_permutation: 15
+aggregate: 14
+sqrt_round_abs: 13
+gcd: 13
+list: 9
+semicolon: 4
+string_quote: 1

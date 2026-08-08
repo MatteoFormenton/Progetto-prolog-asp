@@ -1,0 +1,12 @@
+unsafe_variables recovered correct examples so far
+Original unsafe_variables examples: 301
+Recovered unique correct examples so far: 142
+
+By selected source:
+- unsafe_core_plain_pass1: 81
+- unsafe_sqrt_round_abs_pass1: 20
+- unsafe_core_plain_pass2: 18
+- unsafe_aggregate_pass1: 15
+- unsafe_aggregate_pass2: 4
+- unsafe_sqrt_round_abs_pass2: 3
+- gptoss20b_unsafe_pow_power_current_21x5_best: 1

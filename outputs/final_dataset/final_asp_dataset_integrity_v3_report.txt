@@ -1,0 +1,6 @@
+final ASP dataset integrity v3 report
+rows: 4022
+asp_is_correct_true: 4022
+key_type::id: 4022
+duplicate_id_inside_final: 0
+unique_ids: 4022

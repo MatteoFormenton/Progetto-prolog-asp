@@ -1,0 +1,55 @@
+You are an expert in clingo ASP.
+
+You are given:
+- a math word problem
+- the original Prolog program
+- the expected answer
+- a broken ASP attempt
+
+Your task is to write a new valid clingo ASP program.
+
+Important:
+- Do NOT patch the broken ASP mechanically.
+- Rebuild from the Prolog logic.
+- The output must be valid clingo ASP only.
+- End with exactly:
+#show answer/1.
+
+Clingo rules:
+- Do not use Prolog lists: [], [H|T].
+- Do not use findall, member, append, length, sort.
+- Do not use Prolog if-then-else: -> ;
+- Do not use // ; use / for integer division.
+- Do not use floating point constants.
+- Do not use scientific notation such as 1e-9.
+- Do not use sqrt/1 unless encoded with finite integer rules.
+- Every variable must be safe.
+- Every variable must appear in a positive finite domain or fact before arithmetic/comparison.
+
+For gcd:
+- Avoid recursive gcd if not necessary.
+- Prefer direct finite definitions using divisibility:
+  divisor(A,B,D) :- candidate_d(D), A \ D = 0, B \ D = 0.
+  greater_divisor(A,B,D) :- divisor(A,B,D), divisor(A,B,D2), D2 > D.
+  gcd_value(A,B,D) :- divisor(A,B,D), not greater_divisor(A,B,D).
+- Use small finite domains derived from the constants in the problem.
+- Do not create huge domains.
+
+For fractions:
+- Use numerator/denominator integer arithmetic when needed.
+- If the expected answer is a fraction like \frac{a}{b}, output answer("\\frac{a}{b}") only if the dataset expects that exact symbolic string.
+- If the expected answer is numeric, output answer(N).
+
+Return only ASP code. No explanation. No markdown.
+
+Problem:
+{input}
+
+Original Prolog:
+{prolog_program}
+
+Expected answer:
+{answer}
+
+Broken ASP:
+{asp_program}

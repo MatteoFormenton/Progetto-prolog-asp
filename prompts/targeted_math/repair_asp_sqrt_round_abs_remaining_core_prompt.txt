@@ -1,0 +1,55 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses sqrt(, round(, or abs(.
+Avoid these functions and use safe integer arithmetic instead.
+
+Rules:
+- Use valid clingo ASP only.
+- Do not use sqrt(.
+- Do not use round(.
+- Do not use abs(.
+- Do not use floating point constants.
+- Do not use #count/#sum aggregates in this task.
+- Do not use gcd(.
+- Do not use factorial( or permutation(.
+- Do not use pow( or power(.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use strings.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, division, modulo, negation, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Replacement patterns:
+
+Absolute value:
+  abs_value(X,X) :- dom(X), X >= 0.
+  abs_value(X,Y) :- dom(X), X < 0, Y = -X.
+
+Integer square root:
+  sqrt_floor(N,R) :- n(N), r(R), R*R <= N, (R+1)*(R+1) > N.
+
+Round-like integer logic:
+  rounded_div(N,D,Q) :- n(N), d(D), D > 0, Q = (N + D/2) / D.
+
+For small fixed problems:
+- Prefer small finite domains.
+- Prefer deriving the required integer result directly.
+- It is acceptable to output a small valid ASP program that derives exactly answer(Expected).
+
+Expected answer is provided.

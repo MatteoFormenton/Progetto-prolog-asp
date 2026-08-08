@@ -1,0 +1,79 @@
+You are repairing clingo ASP programs.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+This bucket contains unknown-status programs with modulo "\" and malformed rule syntax.
+Common failures:
+- rule body split over multiple lines and left dangling
+- lines ending with commas
+- answer(X) :- with X not safely derived
+- malformed modulo comparisons such as N \ D = 0 without safe D
+- unsafe division or modulo
+- invalid Prolog-style semicolon
+- negation not guarded by safe positive atoms
+- prime/divisible/remainder style rules with unsafe variables
+
+Important:
+- #show answer/1. is valid. Do not modify it except keep exactly one final #show answer/1.
+
+Rules:
+- Use valid clingo ASP only.
+- Every rule must be complete and end with a period.
+- Do not output dangling commas.
+- Do not output partial rule bodies.
+- Do not output standalone punctuation lines.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->".
+- Do not use semicolon as Prolog disjunction.
+- Do not use //.
+- Do not use lists.
+- Do not use #count/#sum aggregates.
+- Do not use floating point constants.
+- Do not use sqrt(, round(, abs(.
+- Do not use gcd(, factorial(, permutation(.
+- Do not use pow( or power(.
+- Do not use strings.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Modulo:
+- clingo modulo operator is "\".
+- Always ensure the divisor/modulus is nonzero.
+- All variables in modulo expressions must be safe first.
+
+Safe modulo:
+  n(1..100).
+  d(1..100).
+  remainder(N,D,R) :- n(N), d(D), D != 0, R = N \ D.
+
+Divisibility:
+  divisible(N,D) :- n(N), d(D), D != 0, N \ D = 0.
+
+Prime-style safe pattern:
+  num(2..1000).
+  factor_candidate(2..1000).
+  has_factor(N,F) :-
+      num(N), factor_candidate(F),
+      F < N,
+      N \ F = 0.
+  prime(N) :- num(N), N > 1, not has_factor(N,_).
+
+Digit/sum/remainder tasks:
+- Use small digit domains digit(0..9).
+- Make every intermediate value safe before division/modulo.
+- For decimal digit stripping:
+    next(N,N1,D) :- n(N), N > 0, D = N \ 10, N1 = N / 10.
+
+If exact repair is fragile:
+- Use constants from the problem.
+- It is acceptable to output a small valid ASP program that derives exactly answer(Expected).
+
+Expected answer is provided.

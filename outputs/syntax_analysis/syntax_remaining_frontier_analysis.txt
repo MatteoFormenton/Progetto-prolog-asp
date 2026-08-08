@@ -1,0 +1,237 @@
+SYNTAX ERROR REMAINING FRONTIER ANALYSIS
+====================================================================================================
+
+Recovered syntax indices: 272
+Remaining syntax examples in frontier: 1722
+Frontier file: data/gptoss20b_syntax_tests/syntax_error_remaining_frontier.jsonl
+
+ERROR TYPES REMAINING:
+  798  syntax_error
+  450  unsafe_variables
+  326  unknown
+   88  clingo_error
+   60  timeout
+
+LATEST LAYER USED:
+ 1089  mechanical_v2
+  442  unsafe_mechanical_v3
+  191  regexfix
+
+CODE FEATURES:
+ 1720  division
+ 1002  range_domain
+  787  modulo_backslash
+  336  semicolon
+  308  brace_aggregate
+  260  recursive_gcd
+  212  prolog_list
+  207  factorial
+  178  aggregate_count
+  166  permutation
+  159  list_pipe
+  144  sqrt
+  137  abs
+  127  aggregate_sum
+  120  if_then_else
+  115  neg_guard
+   96  recursive_pow
+   80  round
+   77  prime_divisible
+   65  timeout_risk_large_domain
+   39  prolog_findall
+   30  prolog_member
+   21  double_quote_string
+   19  string_concat
+    5  no_answer_atom
+    4  prolog_is
+    2  natural_language
+    1  exists_smaller
+
+SYNTAX MESSAGES:
+  548  unexpected [, expecting ) or ;
+  293  unexpected ., expecting ) or ;
+  237  unexpected [
+  142  unexpected =, expecting )
+   79  unexpected \
+   64  unexpected <, expecting )
+   54  unexpected ","
+   51  unexpected .
+   44  unexpected >, expecting )
+   41  NO_SYNTAX_MESSAGE
+   29  unexpected >=, expecting )
+   23  unexpected <NUMBER>
+   23  unexpected (
+   21  unexpected <ANONYMOUS>, expecting ) or ;
+   16  unexpected ., expecting )
+   14  unexpected >
+   14  unexpected /
+   13  unexpected <=, expecting )
+   12  unexpected <IDENTIFIER>
+   10  unexpected )
+    8  unexpected <VARIABLE>
+    7  unexpected !=, expecting )
+    7  unexpected <IDENTIFIER>, expecting : or "," or . or ;
+    7  unexpected +, expecting "," or . or ;
+    6  unexpected :
+    4  unexpected =, expecting ) or ;
+    4  unexpected }
+    4  unexpected (, expecting {
+    3  unexpected >, expecting ) or ;
+    3  unexpected <, expecting ) or ;
+    3  unexpected :-, expecting : or "," or . or ;
+    3  unexpected EOF, expecting ) or ;
+    3  unexpected *, expecting "," or . or ;
+    2  unexpected EOF, expecting : or "," or . or ;
+    2  unexpected :-, expecting )
+    2  unexpected =, expecting } or ;
+    2  unexpected /, expecting "," or . or ;
+    2  unexpected <NUMBER>, expecting ) or ;
+    2  unexpected *, expecting . or :-
+    2  unexpected :, expecting ) or ;
+    2  unexpected :, expecting } or ;
+    1  unexpected #minimize
+    1  unexpected <STRING>, expecting : or "," or . or ;
+    1  unexpected <NUMBER>, expecting : or "," or . or ;
+    1  unexpected +, expecting ) or ;
+    1  unexpected #count, expecting )
+    1  unexpected #showsig, expecting ) or ;
+    1  unexpected <ANONYMOUS>, expecting : or "," or . or ;
+    1  unexpected ;
+    1  unexpected not, expecting )
+    1  unexpected <ANONYMOUS>, expecting )
+    1  unexpected #maximize
+    1  unexpected #sum
+
+UNSAFE VARIABLES:
+  127  A
+  125  R
+   93  N
+   70  X
+   55  B
+   44  D
+   39  G
+   36  Y
+   29  M
+   26  D2
+   23  N2
+   22  N1
+   22  Acc
+   20  Sum
+   19  P
+   17  D1
+   17  C
+   16  X2
+   15  F
+   14  X1
+   14  Y1
+   14  Y2
+   13  S
+   11  GCD
+   10  Count
+   10  Result
+    9  E
+    9  K
+    9  D3
+    9  Max
+    7  L
+    7  End
+    7  V
+    7  Total
+    6  Value
+    6  Start
+    6  Num
+    6  Mod
+    5  A1
+    5  DY
+    5  A0
+    5  Exp
+    5  I
+    5  CompP
+    5  Base
+    5  G1
+    4  Diff
+    4  B1
+    4  Z
+    4  DX
+    4  I1
+    4  I2
+    4  Den
+    4  First
+    4  Last
+    4  DE
+    4  Z1
+    4  Z2
+    4  Step
+    3  B2
+    3  High
+    3  Low
+    3  P2
+    3  Q
+    3  Half
+    3  J
+    3  Probability
+    3  TotalPoints
+    3  Denominator
+    3  C1
+    3  C2
+    3  Area
+    3  GCD1
+    3  CD
+    3  BC
+    3  Mx
+    3  My
+    3  Dot
+    3  O
+    3  Count5
+
+FEATURE COMBINATIONS:
+  164  division
+  122  division+modulo_backslash+range_domain
+   97  division+permutation+factorial
+   82  division+modulo_backslash+recursive_gcd
+   81  division+range_domain
+   50  sqrt+division
+   49  division+modulo_backslash
+   41  division+modulo_backslash+recursive_gcd+range_domain
+   29  semicolon+division+range_domain
+   28  aggregate_count+brace_aggregate+division+modulo_backslash+range_domain
+   28  division+permutation+factorial+range_domain
+   21  aggregate_count+brace_aggregate+semicolon+division+modulo_backslash
+   21  aggregate_sum+brace_aggregate+division+modulo_backslash+range_domain
+   18  aggregate_count+brace_aggregate+semicolon+division+range_domain
+   18  division+neg_guard+range_domain
+   18  semicolon+division+modulo_backslash+range_domain
+   15  prolog_list+list_pipe+division+modulo_backslash+recursive_gcd
+   15  prolog_list+list_pipe+if_then_else+semicolon+division
+   15  semicolon+division
+   15  sqrt+division+range_domain
+   15  abs+division+range_domain
+   15  prolog_list+list_pipe+division+modulo_backslash+range_domain
+   13  round+division
+   12  if_then_else+semicolon+division+modulo_backslash+range_domain
+   12  aggregate_count+brace_aggregate+division+modulo_backslash+prime_divisible
+   11  prolog_list+list_pipe+division
+   11  round+abs+division+range_domain
+   11  prolog_list+list_pipe+division+range_domain
+   11  aggregate_sum+brace_aggregate+division+range_domain
+   11  aggregate_sum+brace_aggregate+division
+   11  aggregate_count+aggregate_sum+brace_aggregate+division+modulo_backslash
+   11  aggregate_count+brace_aggregate+division+modulo_backslash+recursive_gcd
+   10  if_then_else+abs+semicolon+division+modulo_backslash
+   10  division+range_domain+timeout_risk_large_domain
+   10  prolog_list+division+range_domain
+   10  prolog_list+division
+    9  if_then_else+semicolon+division
+    9  division+modulo_backslash+prime_divisible+range_domain
+    8  round+division+range_domain
+    8  division+modulo_backslash+recursive_gcd+neg_guard+range_domain
+    8  aggregate_count+brace_aggregate+division+range_domain
+    8  division+modulo_backslash+recursive_pow
+    8  division+recursive_pow
+    7  if_then_else+semicolon+division+range_domain
+    7  prolog_list+list_pipe+division+recursive_pow+range_domain
+    7  abs+division+modulo_backslash
+    7  prolog_list+list_pipe+prolog_member+division+modulo_backslash
+    7  division+factorial+range_domain
+    7  semicolon+division+modulo_backslash+recursive_gcd
+    7  semicolon+division+modulo_backslash+prime_divisible+range_domain

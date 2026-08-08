@@ -1,0 +1,16 @@
+total 1994
+has_answer_atom: 1989
+prolog_list_open: 212
+list_pipe: 159
+sqrt(: 148
+if_then_else: 120
+round(: 80
+length(: 43
+findall(: 39
+member(: 31
+append(: 25
+single_quote: 19
+between(: 15
+missing_show: 5
+prolog_is: 4
+prolog_not: 2

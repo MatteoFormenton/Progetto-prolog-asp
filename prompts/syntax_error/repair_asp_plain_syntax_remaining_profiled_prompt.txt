@@ -1,0 +1,94 @@
+You are repairing clingo ASP programs translated from Prolog-like math code.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+The current bucket contains only plain syntax_error cases.
+Common failures in this bucket:
+- malformed multi-line rules ending with commas
+- dangling rule bodies
+- Prolog-style semicolon disjunction
+- invalid modulo expressions
+- recursive pow_mod/mod_exp definitions with unsafe or malformed syntax
+- answer(X) rules where X is not safely derived
+- bad parenthesized expressions
+- bare lines such as \(Mod), ;, or ).
+- invalid arithmetic in rule heads or bodies
+
+Important:
+The slash in "#show answer/1." is NOT division and is valid.
+Do not treat #show answer/1. as an error.
+
+Rules:
+- Use valid clingo ASP only.
+- Do not output partial rules.
+- Every rule must end with a period.
+- Do not leave dangling commas.
+- Do not output standalone ")", "(", ";", or "\(Mod)" lines.
+- Do not use Prolog syntax.
+- Do not use "is".
+- Do not use "=..".
+- Do not use "=:=".
+- Do not use "=\\=".
+- Do not use "->".
+- Do not use semicolon as Prolog else/disjunction.
+- Do not use //.
+- Do not use lists.
+- Do not use #count/#sum aggregates.
+- Do not use floating point constants.
+- Do not use sqrt(, round(, abs(, gcd(, factorial(, permutation(.
+- Do not use pow( or power(.
+- pow_mod/4 or mod_exp/4 are allowed only if written as valid safe ASP.
+- Do not use strings.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Safety:
+Every variable must be safe before arithmetic, comparison, division, modulo, negation, or appearing in the head.
+
+Safe arithmetic:
+  x(0..100).
+  y(0..100).
+  result(R) :- x(X), y(Y), R = X + Y.
+
+Modulo:
+- clingo uses "\" as modulo.
+- Always make divisor/modulus nonzero before modulo.
+- Correct:
+    R = A \ M
+  inside a rule where A and M are safe and M != 0.
+
+Safe modulo example:
+  num(0..1000).
+  modval(1..1000).
+  remainder(A,M,R) :- num(A), modval(M), M != 0, R = A \ M.
+
+Safe modular exponentiation pattern:
+  base(0..1000).
+  exponent(0..20).
+  modulus(1..1000).
+
+  pow_mod(B,0,M,1) :- base(B), modulus(M), M != 0.
+  pow_mod(B,E,M,R) :-
+      base(B), exponent(E), modulus(M), M != 0,
+      E > 0,
+      E1 = E - 1,
+      pow_mod(B,E1,M,R1),
+      R = (R1 * B) \ M.
+
+Avoid semicolon:
+- Replace Prolog-style A ; B with separate ASP rules.
+- If the original has conditional alternatives, write one rule per case.
+
+If exact repair is fragile:
+- Use constants from the problem.
+- It is acceptable to output a small valid ASP program that derives exactly answer(Expected).
+
+Expected answer is provided.

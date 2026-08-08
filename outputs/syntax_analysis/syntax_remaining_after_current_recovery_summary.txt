@@ -1,0 +1,25 @@
+syntax remaining after current recovery
+skipped_recovered: 1071
+remaining: 651
+error::syntax_error: 265
+error::unknown: 163
+error::unsafe_variables: 161
+error::clingo_error: 35
+error::timeout: 27
+
+Features:
+syntax_error: 265
+aggregate: 179
+unknown: 163
+unsafe_variables: 161
+float_decimal: 107
+factorial: 100
+gcd: 91
+permutation: 86
+sqrt_round_abs: 78
+list_syntax: 38
+if_then_else: 36
+clingo_error: 35
+timeout: 27
+pow_power: 22
+string_quote: 13

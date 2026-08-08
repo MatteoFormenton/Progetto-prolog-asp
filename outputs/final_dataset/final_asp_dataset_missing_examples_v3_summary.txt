@@ -1,0 +1,10 @@
+final ASP dataset missing examples v3 summary
+Final examples with id/global key: 4022
+Missing examples: 928
+
+Missing by asp_error_type:
+- syntax_error: 651
+- unsafe_variables: 159
+- clingo_error: 71
+- timeout: 40
+- unknown: 7

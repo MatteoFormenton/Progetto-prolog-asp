@@ -1,0 +1,10 @@
+clingo_error final recovered correct examples
+Original clingo_error examples: 171
+Recovered unique correct examples: 100
+
+By selected source:
+- clingo_pass1_clean: 43
+- clingo_multi_candidate_best: 39
+- clingo_pass2_clean_v2: 11
+- clingo_pass3_has_answer: 4
+- clingo_rebuild_from_prolog_64: 3

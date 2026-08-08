@@ -78,3 +78,4 @@ wc -l data/asp_checked_full_hpc.jsonl
 echo "Report finale:"
 cat outputs/asp_validation_report_full_hpc.txt
 
+echo "Fine job."

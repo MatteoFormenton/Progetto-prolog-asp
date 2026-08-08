@@ -1,0 +1,95 @@
+You are repairing clingo ASP programs that fail with unsafe variables.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+This bucket contains unsafe-variable ASP programs involving sqrt-like, round-like, abs-like, geometry, distance, fractions, or scaled arithmetic.
+Common failures:
+- variables in answer(X) are unsafe
+- variables used only in arithmetic are unsafe
+- dangling commas and broken multi-line rules
+- division without safe nonzero denominator
+- sqrt(X,Y), round(X,Y), abs(X,Y) predicates used without safe domains
+- geometry/distance/area tasks with unsafe intermediate variables
+- complex-number helper predicates with unsafe real/imaginary parts
+
+Important:
+- #show answer/1. is valid. Keep exactly one final #show answer/1.
+- The slash in #show answer/1. is not division.
+
+Rules:
+- Use valid clingo ASP only.
+- Every rule must end with a period.
+- Do not output dangling commas.
+- Do not output partial rule bodies.
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->".
+- Do not use semicolon as Prolog disjunction.
+- Do not use //.
+- Do not use lists.
+- Do not use strings for numeric answers.
+- Avoid #count/#sum unless already necessary.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+Variable safety:
+Every variable must appear in a positive domain atom before arithmetic, comparison, division, negation, or appearing in the head.
+
+Safe arithmetic pattern:
+  answer(Result) :-
+      a(A),
+      b(B),
+      B != 0,
+      Result = A / B.
+
+Safe square-root relation:
+Do not use an unsupported built-in sqrt function.
+Represent integer square roots with facts or bounded relations:
+  sqrt(0,0).
+  sqrt(1,1).
+  sqrt(4,2).
+  sqrt(9,3).
+  sqrt(16,4).
+  sqrt(25,5).
+  sqrt(36,6).
+  sqrt(49,7).
+  sqrt(64,8).
+  sqrt(81,9).
+  sqrt(100,10).
+
+Or use a bounded relation:
+  n(0..10000).
+  root(0..100).
+  sqrt_int(N,R) :-
+      n(N), root(R),
+      R*R = N.
+
+Safe absolute value:
+  abs_val(X,Y) :- x(X), X >= 0, Y = X.
+  abs_val(X,Y) :- x(X), X < 0, Y = -X.
+
+Safe rounding/scaled arithmetic:
+If decimals are needed, use scaled integers.
+For example, represent 1.23 as 123 with scale 100.
+Do not output floating point constants.
+
+Safe geometry:
+  dx(DX) :- x1(X1), x2(X2), DX = X2 - X1.
+  dy(DY) :- y1(Y1), y2(Y2), DY = Y2 - Y1.
+  dist2(D2) :- dx(DX), dy(DY), D2 = DX*DX + DY*DY.
+
+For distance tasks, prefer squared distance if expected answer matches it.
+For square-root distance tasks, use sqrt_int(D2,D) if the result is an integer.
+
+If exact repair is fragile:
+- Use constants from the problem.
+- It is acceptable to output a small valid bounded-search ASP program that derives the expected numeric answer without using strings.
+
+Expected answer is provided.

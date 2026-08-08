@@ -1,0 +1,67 @@
+You are fixing clingo ASP programs with unsafe variable errors.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that clingo grounds it safely and derives the expected answer.
+
+Use the provided clingo unsafe-variable error to identify exactly which rule is unsafe.
+
+Main repair strategy:
+- Every variable must appear in a positive body literal before it is used in arithmetic, comparison, modulo, division, negation, or the rule head.
+- If clingo reports #Arith0, #Arith1, etc., fix the variables inside that arithmetic expression.
+- If a variable is used in X \ Y, both X and Y must be safe first.
+- If a variable is used in X / Y, both X and Y must be safe first.
+- If a variable is used in X = Expr, all variables in Expr must be safe first.
+- If a variable appears only inside not p(X), add a positive domain literal for X.
+- Add small finite domain predicates when needed.
+- Reuse existing domains from the broken ASP whenever possible.
+- Avoid huge domains.
+- Avoid recursive rules that do not reduce over a finite domain.
+- Avoid rules like p(X) :- p(X), ...
+
+Hard restrictions:
+- Do not use Prolog syntax.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not output only "#show answer/1.".
+- The final program must derive answer/1.
+
+Useful safe patterns:
+
+Modulo:
+bad:
+  p(X,Y) :- X \ Y = 0.
+good:
+  p(X,Y) :- dom_x(X), dom_y(Y), Y != 0, X \ Y = 0.
+
+Arithmetic result:
+bad:
+  q(R) :- R = A + B.
+good:
+  q(R) :- dom_a(A), dom_b(B), R = A + B.
+
+Comparison:
+bad:
+  q(X) :- X > 0.
+good:
+  q(X) :- dom_x(X), X > 0.
+
+Negation:
+bad:
+  q(X) :- not bad(X).
+good:
+  q(X) :- dom_x(X), not bad(X).
+
+Maximum/minimum:
+good:
+  best(X) :- candidate(X), not better(X).
+  better(X) :- candidate(X), candidate(Y), Y < X.

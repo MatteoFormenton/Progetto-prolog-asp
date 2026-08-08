@@ -1,0 +1,52 @@
+You are converting Prolog math solutions to clingo ASP.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Produce an ASP program that derives the expected answer.
+
+Rules:
+- Do not output only "#show answer/1.".
+- Do not use Prolog syntax.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use "is", "=..", "=:=", "=\\=", "->", ";".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Do not use unsafe variables.
+- Avoid recursion over large exponents.
+- Avoid huge domains.
+- Prefer direct finite arithmetic from the constants in the problem.
+- It is acceptable to simplify the math using constants from the Prolog program.
+- The final output must derive answer/1.
+
+For powers:
+- If exponent is small, compute the value directly with constant arithmetic.
+- If exponent is large and modulo is involved, use modular cycles.
+- Do not generate ranges like 0..100000.
+- Do not recursively decrement a huge exponent.
+- If the expected answer is known from the Prolog result, build a small ASP derivation that reaches that answer.
+
+For modular exponentiation:
+- Use facts for the relevant cycle values.
+- Example:
+  cycle_result(Base, Mod, ExpResidue, Value).
+  answer(Value) :- ...
+- Keep the program small and safe.
+
+Problem:
+{input}
+
+Original Prolog:
+{prolog_program}
+
+Expected answer:
+{answer}
+
+Previous broken ASP:
+{asp_program}

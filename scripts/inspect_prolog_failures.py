@@ -1,9 +1,5 @@
 """
-Ho creato questo file perché, facendo dei test sui programmi Prolog
-con 100 elementi, ho notato che alcune risposte non corrispondono
-a quelle attese.
-
-Uso questo script per visualizzare più facilmente quali esempi sono
+Script per visualizzare più facilmente quali esempi sono
 problematici e capire dove il programma Prolog sbaglia.
 """
 

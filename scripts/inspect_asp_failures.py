@@ -1,7 +1,4 @@
 """
-Ho creato questo file per controllare più facilmente quali programmi ASP
-non hanno prodotto la risposta corretta.
-
 Leggo il file con i risultati già verificati, salto gli esempi corretti
 e stampo solo quelli problematici, così posso capire se l'errore dipende
 dall'output prodotto da clingo, dal programma ASP o dal confronto con

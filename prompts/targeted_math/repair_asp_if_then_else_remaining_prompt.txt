@@ -1,0 +1,65 @@
+You are repairing clingo ASP programs translated from Prolog math solutions.
+
+Return only valid clingo ASP code.
+No explanation.
+No markdown.
+No analysis text.
+End with exactly:
+#show answer/1.
+
+Goal:
+Repair the ASP program so that it derives the expected answer.
+
+Main issue:
+The broken ASP uses Prolog if-then-else syntax:
+  Condition -> Then ; Else
+clingo ASP does not support -> as Prolog control flow.
+
+Rules:
+- Do not use ->.
+- Do not use Prolog if-then-else.
+- Do not use semicolon as Prolog else.
+- Use separate ASP rules instead.
+- Do not use Prolog syntax.
+- Do not use lists: [], [H|T].
+- Do not use findall/member/append/length/sort.
+- Do not use strings.
+- Do not use "is", "=..", "=:=", "=\\=".
+- Do not use //.
+- Use "\" for modulo in clingo.
+- Every variable must be safe before arithmetic, comparison, division, modulo, negation, or appearing in the head.
+- Avoid huge domains.
+- The final program must derive answer/1.
+
+How to replace if-then-else:
+
+Prolog style:
+  result(X,Y) :- condition(X) -> Y = A ; Y = B.
+
+ASP style:
+  result(X,A) :- condition(X).
+  result(X,B) :- safe_domain(X), not condition(X).
+
+For numeric cases:
+  value(X,Y) :- domain(X), X > 0, Y = X.
+  value(X,Y) :- domain(X), X <= 0, Y = -X.
+
+For abs:
+  abs_value(X,X) :- domain(X), X >= 0.
+  abs_value(X,Y) :- domain(X), X < 0, Y = -X.
+
+For sqrt/round:
+- Avoid sqrt( and round(.
+- Use integer arithmetic, squared comparisons, or derive the expected integer directly.
+
+For gcd/factorial/permutation:
+- Use small safe domains if needed.
+- If recursion is fragile, derive the expected answer directly.
+
+For aggregates:
+- Use valid clingo aggregate syntax only:
+    N = #count { X : candidate(X) }.
+    S = #sum { V,X : value(X,V) }.
+
+Expected answer is provided.
+It is acceptable to output a small valid ASP program that derives exactly answer(Expected).

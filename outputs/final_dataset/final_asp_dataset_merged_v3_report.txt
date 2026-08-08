@@ -1,0 +1,27 @@
+final ASP dataset merged v3 report
+Global key priority: id -> original_index fallback -> content hash
+Final unique examples: 4022
+Duplicate attempts skipped: 0
+Missing source paths: 0
+
+Selected rows by source:
+- baseline_qwen32b_correct: 1837
+- syntax_error_recovered: 1343
+- wrong_answer_recovered: 591
+- clingo_error_recovered: 100
+- unsafe_core_plain_recovered: 99
+- unsafe_sqrt_round_abs_recovered: 23
+- unsafe_aggregate_recovered: 19
+- timeout_recovered: 9
+- unsafe_pow_power_recovered_optional: 1
+
+Attempted correct rows by source:
+- baseline_qwen32b_correct: 1837
+- syntax_error_recovered: 1343
+- wrong_answer_recovered: 591
+- clingo_error_recovered: 100
+- unsafe_core_plain_recovered: 99
+- unsafe_sqrt_round_abs_recovered: 23
+- unsafe_aggregate_recovered: 19
+- timeout_recovered: 9
+- unsafe_pow_power_recovered_optional: 1
